@@ -3,12 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <header className="w-full bg-primary shadow-md shadow-b-[5px] -shadow-spread-2">
-      <div className="navbar max-w-[1536px] mx-auto justify-between flex items-center px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4">
+      <div className="navbar max-w-[1440px] mx-auto justify-between flex items-center px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4">
         <div className="navbar-start">
           <Link to={"/"} className="">
             <img
               src="/assets/logo.png"
-              className="max-w-[100px] md:max-w-[110px]"
+              className="max-w-[120px] md:max-w-[150px]"
               alt="logo"
             />
           </Link>
@@ -19,7 +19,7 @@ const Header = () => {
             <li>
               <NavLink
                 to={"/"}
-                className="text-secondary  font-medium hover:text-[#FF3811] transition-colors"
+                className="text-secondary  font-medium hover:text-[#3B61DD] transition-colors"
               >
                 Home
               </NavLink>
@@ -27,7 +27,7 @@ const Header = () => {
             <li>
               <NavLink
                 to={"/about"}
-                className="text-secondary  font-medium hover:text-[#FF3811] transition-colors"
+                className="text-secondary  font-medium hover:text-[#3B61DD] transition-colors"
               >
                 About
               </NavLink>
@@ -35,15 +35,23 @@ const Header = () => {
             <li>
               <NavLink
                 to={"/rooms"}
-                className="text-secondary  font-medium hover:text-[#FF3811] transition-colors"
+                className="text-secondary  font-medium hover:text-[#3B61DD] transition-colors"
               >
                 Rooms
               </NavLink>
             </li>
             <li>
               <NavLink
+                to={"/gallery"}
+                className="text-secondary  font-medium hover:text-[#3B61DD] transition-colors"
+              >
+                Gallery
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to={"/my-bookings"}
-                className="text-secondary  font-medium hover:text-[#FF3811] transition-colors"
+                className="text-secondary  font-medium hover:text-[#3B61DD] transition-colors"
               >
                 My Bookings
               </NavLink>
@@ -51,7 +59,7 @@ const Header = () => {
             <li>
               <NavLink
                 to={"/contact"}
-                className="text-secondary  font-medium hover:text-[#FF3811] transition-colors"
+                className="text-secondary  font-medium hover:text-[#3B61DD] transition-colors"
               >
                 Contact
               </NavLink>
@@ -64,7 +72,7 @@ const Header = () => {
           <div className="flex items-center justify-end gap-6">
             {/* search & cart*/}
             <div className="relative py-2 cursor-pointer">
-              <div className="t-0 absolute left-3">
+              <div className="absolute t-0 left-3">
                 <p className="flex h-2 w-2 items-center justify-center rounded-full bg-[#3b61dd] p-3 text-xs text-white">
                   3
                 </p>
@@ -75,7 +83,7 @@ const Header = () => {
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="mt-4 h-6 w-6"
+                className="w-6 h-6 mt-4"
               >
                 <path
                   strokeLinecap="round"
@@ -126,7 +134,7 @@ const Header = () => {
             {/* Profile */}
 
             <Link
-              to={"/appoinment"}
+              to={"/login"}
               className="hidden sm:flex px-5 py-[8px] md:px-8 md:py-[10px] hover:bg-transparent bg-[#3b61dd] transition-colors border-[#3b61dd] border rounded-full font-medium hover:text-[#3b61dd] text-[#fff]"
             >
               Login
@@ -177,7 +185,7 @@ const Header = () => {
                 <li className="mb-5 ">
                   <NavLink
                     to={"/"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#FF3811] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#3B61DD] transition-colors"
                   >
                     Home
                   </NavLink>
@@ -185,7 +193,7 @@ const Header = () => {
                 <li className="mb-5 ">
                   <NavLink
                     to={"/about"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#FF3811] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#3B61DD] transition-colors"
                   >
                     About
                   </NavLink>
@@ -193,15 +201,23 @@ const Header = () => {
                 <li className="mb-5 ">
                   <NavLink
                     to={"/rooms"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#FF3811] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#3B61DD] transition-colors"
                   >
                     Rooms
                   </NavLink>
                 </li>
                 <li className="mb-5 ">
                   <NavLink
+                    to={"/gallery"}
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#3B61DD] transition-colors"
+                  >
+                    Gallery
+                  </NavLink>
+                </li>
+                <li className="mb-5 ">
+                  <NavLink
                     to={"/my-bookings"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#FF3811] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#3B61DD] transition-colors"
                   >
                     My Bookings
                   </NavLink>
@@ -209,14 +225,14 @@ const Header = () => {
                 <li className="mb-5 ">
                   <NavLink
                     to={"/contact"}
-                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#FF3811] transition-colors"
+                    className="my-1 text-[#1e1e1e] border border-transparent  font-medium hover:text-[#3B61DD] transition-colors"
                   >
                     Contact
                   </NavLink>
                 </li>
                 <li className="mb-5 ">
                   <Link
-                    to={"/appoinment"}
+                    to={"/login"}
                     className="sm:hidden text-center flex px-4  py-[7px] sm:px-5 sm:py-[8px] xl:px-7 xl:py-[10px] hover:bg-transparent bg-[#3b61dd] transition-colors border-[#3b61dd] border rounded-full justify-center  font-medium hover:text-[#3b61dd] text-[#fff]"
                   >
                     Login

@@ -1,136 +1,13 @@
-import { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { Bounce, toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { AuthContext } from "../providers/FirebaseAuthProvider";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [eye, setEye] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const navigate = useNavigate();
-  const {
-    createUser,
-    logOut,
-    updateCurrentUser,
-    setLoading,
-    handleGoogleLogin,
-    setUser,
-  } = useContext(AuthContext);
-
-  const handleSignUp = (data) => {
-    const displayName = data?.name;
-    const email = data?.email;
-    // const photoURL = data?.photoUrl;
-    const password = data?.password;
-
-    console.log(displayName, email, password);
-
-    //create user
-    createUser(email, password)
-      .then((userCredential) => {
-        // Signed up
-        console.log(userCredential, "from signUp");
-
-        updateCurrentUser(displayName);
-        toast.success("Registration Success", {
-          position: "top-right",
-          autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        // signout
-        logOut();
-        setLoading(false);
-        navigate("/login");
-      })
-      .catch((error) => {
-        const errorMessage = error;
-        const errorCode = error.code;
-        console.log(errorMessage, errorCode, "from signUp");
-        toast.error(
-          `${
-            errorCode ===
-            ("auth/account-exists-with-different-credential" ||
-              "auth/email-already-in-use")
-              ? "Email already exists"
-              : "Registration Failed"
-          }`,
-          {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          }
-        );
-        setLoading(false);
-      });
-  };
-
-  //google
-  const googleSignin = () => {
-    handleGoogleLogin()
-      .then((userCredential) => {
-        // Signed in
-        const currentUser = userCredential.user;
-        setUser(currentUser);
-        setLoading(false);
-        toast.success("Login Success", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorCode = error.errorCode;
-        toast.error(
-          `${
-            errorCode ===
-            ("auth/account-exists-with-different-credential" ||
-              "auth/email-already-in-use")
-              ? "Email already exists"
-              : "Registration Failed"
-          }`,
-          {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          }
-        );
-      });
-  };
 
   return (
     <>
       <div className="max-w-[1140px] min-h-[90vh] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[80px] md:py-[100px] flex items-center justify-center">
-        <div className="grid items-center justify-between w-full grid-cols-1 md:grid-cols-2">
+        <div className="grid items-center justify-between w-full grid-cols-1 md:grid-cols-2 gap-[40px] md:gap-[20px] lg:gap-[60px]">
           <div className="order-2 col-span-1 mt-6 md:order-1 md:mt-0">
             <img src="/assets/signup.png" alt="img" />
           </div>
@@ -143,7 +20,7 @@ const SignUp = () => {
                 <p className="mt-2 text-sm text-gray-600 ">
                   Don{"'"}t have an account yet?{" "}
                   <Link
-                    className="font-medium text-[#FF3811] decoration-2 hover:underline "
+                    className="font-medium text-[#3B61DD] decoration-2 hover:underline "
                     to={"/login"}
                   >
                     Sign in here
@@ -151,10 +28,7 @@ const SignUp = () => {
                 </p>
               </div>
               <div className="mt-5">
-                <button
-                  onClick={googleSignin}
-                  className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
-                >
+                <button className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none ">
                   <svg
                     className="w-4 h-auto"
                     width={46}
@@ -185,7 +59,7 @@ const SignUp = () => {
                   Or
                 </div>
                 {/* Form */}
-                <form onSubmit={handleSubmit(handleSignUp)}>
+                <form>
                   <div className="grid gap-y-4">
                     {/* Form Group */}
                     <div>
@@ -197,14 +71,13 @@ const SignUp = () => {
                           type="text"
                           id="name"
                           name="name"
-                          {...register("name")}
-                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#FF3811] focus:ring-[#FF3811]"
+                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                           placeholder="Enter your name.."
                           required=""
                         />
                         <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                           <svg
-                            className="text-red-500 size-5"
+                            className="text-[#3B61DD] size-5"
                             width={16}
                             height={16}
                             fill="currentColor"
@@ -227,14 +100,13 @@ const SignUp = () => {
                           type="email"
                           id="email"
                           name="email"
-                          {...register("email")}
-                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#FF3811] focus:ring-[#FF3811]"
+                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                           required=""
                           placeholder="Enter your email"
                         />
                         <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                           <svg
-                            className="text-red-500 size-5"
+                            className="text-[#3B61DD] size-5"
                             width={16}
                             height={16}
                             fill="currentColor"
@@ -258,21 +130,21 @@ const SignUp = () => {
                         <input
                           id="password"
                           name="password"
-                          {...register("password", {
-                            minLength: {
-                              value: 6,
-                              message:
-                                "Password must be at least 6 characters long.",
-                            },
-                            pattern: {
-                              value:
-                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.#!%*?&^])[A-Za-z\d@$.#!%*?&^]*$/,
-                              message:
-                                "Password must include at least one uppercase, lowercase, digit, and special character.",
-                            },
-                          })}
+                          // {...register("password", {
+                          //   minLength: {
+                          //     value: 6,
+                          //     message:
+                          //       "Password must be at least 6 characters long.",
+                          //   },
+                          //   pattern: {
+                          //     value:
+                          //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.#!%*?&^])[A-Za-z\d@$.#!%*?&^]*$/,
+                          //     message:
+                          //       "Password must include at least one uppercase, lowercase, digit, and special character.",
+                          //   },
+                          // })}
                           type={`${eye ? "text" : "password"}`}
-                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#FF3811] focus:ring-[#FF3811]"
+                          className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                           required=""
                           placeholder="..........."
                         />
@@ -291,9 +163,9 @@ const SignUp = () => {
                           />
                         </div>
                       </div>
-                      <p className="text-red-600">
+                      {/* <p className="text-red-600">
                         {errors?.password?.message}
-                      </p>
+                      </p> */}
                     </div>
                     {/* End Form Group */}
                     {/* Checkbox */}
@@ -315,7 +187,7 @@ const SignUp = () => {
                     {/* End Checkbox */}
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#FF3811] transition-colors bg-[#FF3811] border border-[#FF3811] rounded-lg gap-x-2 hover:bg-transparent"
+                      className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#3B61DD] transition-colors bg-[#3B61DD] border border-[#3B61DD] rounded-lg gap-x-2 hover:bg-transparent"
                     >
                       Register
                     </button>
@@ -327,7 +199,6 @@ const SignUp = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

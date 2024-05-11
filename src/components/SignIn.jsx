@@ -1,131 +1,12 @@
-import { useContext, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bounce, toast, ToastContainer } from "react-toastify";
-import { AuthContext } from "../providers/FirebaseAuthProvider";
-import { useForm } from "react-hook-form";
-import "react-toastify/dist/ReactToastify.css";
-import { signinJwt } from "../utils/api";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [eye, setEye] = useState(false);
 
-  const { setLoading, logInUser, setUser, handleGoogleLogin } =
-    useContext(AuthContext);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const handleSignIn = (data) => {
-    const email = data?.email;
-    const password = data?.password;
-
-    logInUser(email, password)
-      .then(async (userCredential) => {
-        // Signed in
-        const currentUser = userCredential.user;
-        setUser(currentUser);
-        setLoading(false);
-
-        // jwt token
-        const result = await signinJwt(currentUser?.email);
-        if (result?.status === "success") {
-          toast.success("Login Success", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-          navigate(location?.state ? location?.state : "/");
-        }
-        // jwt token
-      })
-      .catch((error) => {
-        const errorMessage = error;
-        const errorCode = error.code;
-        console.log(errorMessage, errorCode, "from signin");
-        toast.error(
-          `${
-            errorCode ===
-            ("auth/account-exists-with-different-credential" ||
-              "auth/email-already-in-use")
-              ? "Email already exists"
-              : "Registration Failed"
-          }`,
-          {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          }
-        );
-        setLoading(false);
-      });
-  };
-
-  //google
-  const googleSignin = () => {
-    handleGoogleLogin()
-      .then((userCredential) => {
-        // Signed in
-        const currentUser = userCredential.user;
-        setUser(currentUser);
-        setLoading(false);
-        toast.success("Login Success", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        // navigate(location?.state ? location?.state : "/");
-      })
-      .catch((error) => {
-        const errorCode = error.errorCode;
-        toast.error(
-          `${
-            errorCode ===
-            ("auth/account-exists-with-different-credential" ||
-              "auth/email-already-in-use")
-              ? "Email already exists"
-              : "Registration Failed"
-          }`,
-          {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          }
-        );
-      });
-  };
-
   return (
-    <div className="max-w-[1140px] min-h-[90vh] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[80px] md:py-[100px] flex items-center justify-center">
-      <div className="grid items-center justify-between w-full grid-cols-1 md:grid-cols-2">
+    <div className="max-w-[1200px] min-h-[90vh] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[80px] md:py-[100px] flex items-center justify-center">
+      <div className="grid items-center justify-between w-full grid-cols-1 md:grid-cols-2 gap-[40px] md:gap-[20px] lg:gap-[60px]">
         <div className="order-2 col-span-1 mt-6 md:order-1 md:mt-0">
           <img src="/assets/signup.png" alt="img" />
         </div>
@@ -136,7 +17,7 @@ const SignIn = () => {
               <p className="mt-2 text-sm text-gray-600 ">
                 Don{"'"}t have an account yet?{" "}
                 <Link
-                  className="font-medium text-[#FF3811] decoration-2 hover:underline "
+                  className="font-medium text-[#3B61DD] decoration-2 hover:underline "
                   to={"/register"}
                 >
                   Sign up here
@@ -144,10 +25,7 @@ const SignIn = () => {
               </p>
             </div>
             <div className="mt-5">
-              <button
-                onClick={googleSignin}
-                className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
-              >
+              <button className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none ">
                 <svg
                   className="w-4 h-auto"
                   width={46}
@@ -178,7 +56,7 @@ const SignIn = () => {
                 Or
               </div>
               {/* Form */}
-              <form onSubmit={handleSubmit(handleSignIn)}>
+              <form>
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
@@ -190,14 +68,13 @@ const SignIn = () => {
                         type="email"
                         id="email"
                         name="email"
-                        {...register("email")}
-                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#FF3811] focus:ring-[#FF3811]"
+                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                         required=""
                         placeholder="Enter your email"
                       />
                       <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                         <svg
-                          className="text-red-500 size-5"
+                          className="text-[#3B61DD] size-5"
                           width={16}
                           height={16}
                           fill="currentColor"
@@ -217,7 +94,7 @@ const SignIn = () => {
                         Password
                       </label>
                       <div>
-                        <a className="text-sm font-medium text-[#FF3811] decoration-2 hover:underline">
+                        <a className="text-sm font-medium text-[#3B61DD] decoration-2 hover:underline">
                           Forgot password?
                         </a>
                       </div>
@@ -227,8 +104,7 @@ const SignIn = () => {
                         type={`${eye ? "text" : "password"}`}
                         id="password"
                         name="password"
-                        {...register("password")}
-                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#FF3811] focus:ring-[#FF3811]"
+                        className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                         required=""
                         placeholder=".........."
                       />
@@ -256,7 +132,7 @@ const SignIn = () => {
                         id="remember-me"
                         name="remember-me"
                         type="checkbox"
-                        className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500"
+                        className="shrink-0 mt-0.5 border-gray-200 rounded text-[#3B61DD] focus:ring-[#3B61DD]"
                       />
                     </div>
                     <div className="ms-3">
@@ -268,7 +144,7 @@ const SignIn = () => {
                   {/* End Checkbox */}
                   <button
                     type="submit"
-                    className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#FF3811] transition-colors bg-[#FF3811] border border-[#FF3811] rounded-lg gap-x-2 hover:bg-transparent"
+                    className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white hover:text-[#3B61DD] transition-colors bg-[#3B61DD] border border-[#3B61DD] rounded-lg gap-x-2 hover:bg-transparent"
                   >
                     Login
                   </button>
@@ -279,8 +155,6 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-
-      <ToastContainer />
     </div>
   );
 };

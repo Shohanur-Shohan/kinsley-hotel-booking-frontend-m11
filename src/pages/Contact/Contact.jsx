@@ -1,5 +1,14 @@
+import { Helmet } from "react-helmet-async";
+
 const Contact = () => {
-  return <div>contact</div>;
+  return (
+    <div>
+      <Helmet>
+        <title>Kinsley-Hotel | Contact</title>
+      </Helmet>
+      contact
+    </div>
+  );
 };
 
 export default Contact;
