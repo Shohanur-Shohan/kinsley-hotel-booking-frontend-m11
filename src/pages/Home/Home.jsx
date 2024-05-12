@@ -5,6 +5,7 @@ import Featured from "../../components/Home/Featured/Featured";
 import AllRooms from "../../components/Home/AllRooms/AllRooms";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import Newsletter from "../../components/Newsletter";
+import Map from "../../components/Map/Map";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <Featured />
       <AllRooms />
       <Testimonials />
+      <Map />
       <Newsletter />
     </main>
   );
