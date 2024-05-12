@@ -10,6 +10,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import "./Testimonials.css";
 import TestimonialCard from "./TestimonialCard";
 import { useRef } from "react";
+import Heading from "../../Heading";
 
 const Testimonials = () => {
   const swiperRef = useRef(null);
@@ -29,54 +30,51 @@ const Testimonials = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[60px] md:py-[100px]">
-      <div className="relative flex items-center justify-between ">
-        <div>
-          <h2 className="text-2xl font-bold text-center text-gray-900 sm:text-2xl lg:text-4xl lg:text-left">
-            Testimonials
-          </h2>
+      <Heading
+        title={"Feedback from our Guests"}
+        des={
+          "Discover what our guests are saying about their unforgettable experiences.Read firsthand accounts of exceptional service and memorable stays."
+        }
+      />
+      <div className="relative flex items-center justify-end gap-8 ml-auto">
+        <div
+          className="border border-[#3B61DD] transition-colors rounded-full hover:bg-[#3B61DD] swiper-button-prev group"
+          onClick={goPrev}
+        >
+          <svg
+            className="text-[#3B61DD] group-hover:text-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20.9999 12L4.99992 12M9.99992 6L4.70703 11.2929C4.3737 11.6262 4.20703 11.7929 4.20703 12C4.20703 12.2071 4.3737 12.3738 4.70703 12.7071L9.99992 18"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          {/* </button> */}
         </div>
-
-        {/* Slider controls */}
-        <div className="relative flex items-center justify-end gap-8">
-          <div
-            className="border border-[#3B61DD] transition-colors rounded-full hover:bg-[#3B61DD] swiper-button-prev group"
-            onClick={goPrev}
+        <div
+          className="border border-[#3B61DD] rounded-full transition-colors hover:bg-[#3B61DD] swiper-button-next group"
+          onClick={goNext}
+        >
+          <svg
+            className="text-[#3B61DD] group-hover:text-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              className="text-[#3B61DD] group-hover:text-white"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20.9999 12L4.99992 12M9.99992 6L4.70703 11.2929C4.3737 11.6262 4.20703 11.7929 4.20703 12C4.20703 12.2071 4.3737 12.3738 4.70703 12.7071L9.99992 18"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            {/* </button> */}
-          </div>
-          <div
-            className="border border-[#3B61DD] rounded-full transition-colors hover:bg-[#3B61DD] swiper-button-next group"
-            onClick={goNext}
-          >
-            <svg
-              className="text-[#3B61DD] group-hover:text-white"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 12L19 12M14 18L19.2929 12.7071C19.6262 12.3738 19.7929 12.2071 19.7929 12C19.7929 11.7929 19.6262 11.6262 19.2929 11.2929L14 6"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+            <path
+              d="M3 12L19 12M14 18L19.2929 12.7071C19.6262 12.3738 19.7929 12.2071 19.7929 12C19.7929 11.7929 19.6262 11.6262 19.2929 11.2929L14 6"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
       </div>
 

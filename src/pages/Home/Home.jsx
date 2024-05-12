@@ -4,6 +4,7 @@ import About from "../../components/Home/About/About";
 import Featured from "../../components/Home/Featured/Featured";
 import AllRooms from "../../components/Home/AllRooms/AllRooms";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
+import Newsletter from "../../components/Newsletter";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       <Featured />
       <AllRooms />
       <Testimonials />
+      <Newsletter />
     </main>
   );
 };

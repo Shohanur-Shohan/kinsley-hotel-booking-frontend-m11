@@ -8,11 +8,13 @@ const Heading = ({ title, link, des, btn }) => {
         {title}
       </h1>
       <p className="text-center mt-[20px] mb-[30px]">{des}</p>
-      <Link to={link} className="bg-[#ffffff] rounded-full  px-2 py-2 w-fit">
-        <div className="bg-[#3B61DD] text-[15px] text-white tracking-[2px] px-[20px] sm:px-[30px] py-3 sm:py-4 z-20 hover:bg-[#4470FE] rounded-full">
-          {btn}
-        </div>
-      </Link>
+      {btn && (
+        <Link to={link} className="bg-[#ffffff] rounded-full  px-2 py-2 w-fit">
+          <div className="bg-[#3B61DD] text-[15px] text-white tracking-[2px] px-[20px] sm:px-[30px] py-3 sm:py-4 z-20 hover:bg-[#4470FE] rounded-full">
+            {btn}
+          </div>
+        </Link>
+      )}
     </div>
   );
 };

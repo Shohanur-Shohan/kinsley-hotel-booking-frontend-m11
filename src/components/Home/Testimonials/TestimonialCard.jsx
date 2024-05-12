@@ -11,10 +11,12 @@ const TestimonialCard = () => {
           <h5 className="font-medium text-gray-900 transition-all duration-500 group-hover:text-indigo-600 swiper-slide-active:text-indigo-600">
             Jane D
           </h5>
-          <span className="text-sm leading-6 text-gray-500">CEO </span>
+          <span className="text-sm leading-6 text-gray-500">
+            @shohanurshohan
+          </span>
         </div>
       </div>
-      <div className="w-fit bg-[#ffffff33] px-2 py-1 rounded-full mb-[10px]">
+      <div className="mb-[10px] mt-6">
         <ul className="flex gap-2">
           <li>
             <img
