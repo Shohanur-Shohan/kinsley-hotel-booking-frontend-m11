@@ -4,12 +4,12 @@ const About = () => {
   return (
     <div className="w-full bg-[#F0FDFD] border-t-[20px] border-white pb-[100px]">
       <HotelFeatures />
-      <div className="max-w-[1440px]  mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 mt-[100px]">
+      <div className="max-w-[1440px]  mx-auto px-2 sm:px-4 py-2 sm:py-4 mt-[100px] bg-white rounded-2xl">
         <div className="grid grid-cols-1 col-span-1 lg:grid-cols-2">
           <div className="col-span-1">
             <img
-              className="w-full"
-              src="/public/assets/about-t1.jpg"
+              className="w-full rounded-lg lg:rounded-none lg:rounded-tl-lg"
+              src="/assets/about-t1.jpg"
               alt="img"
             />
           </div>
@@ -41,14 +41,14 @@ const About = () => {
                 needs. Trust our experience to guide your journey to success.
               </p>
               <div className="bg-[#3B61DD] w-fit text-[15px] text-white tracking-[2px] px-[20px] sm:px-[30px] py-3 sm:py-4 z-20 hover:bg-[#4470FE] rounded-full flex items-center justify-around gap-3">
-                Book Room
+                Choose a room
               </div>
             </div>
           </div>
           <div className="order-1 col-span-1 lg:order-2">
             <img
-              className="w-full"
-              src="/public/assets/about-t2.jpg"
+              className="w-full rounded-lg lg:rounded-none lg:rounded-br-lg"
+              src="/assets/about-t2.jpg"
               alt="img"
             />
           </div>
