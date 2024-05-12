@@ -11,6 +11,7 @@
 html {
     font-family: "Jost", sans-serif;
     scroll-behavior: smooth;
+    /* letter-spacing: 1px; */
 }
 
 .active {
@@ -30,10 +31,10 @@ html {
 
 .bg-overlay3 {
     background: rgb(0, 0, 0);
-    background: linear-gradient(90deg, #24263299 0%, #24263299 100%);
+    background: linear-gradient(90deg, #2426329e 0%, #2426329e 100%);
 }
 
-@keyframes scaleBackground {
+/* @keyframes scaleBackground {
     0% {
         transform: scale(1);
     }
@@ -45,8 +46,22 @@ html {
     100% {
         transform: scale(1);
     }
+} */
+
+
+@keyframes scaleAnimation {
+
+    0%,
+    100% {
+        transform: translateY(-15px);
+    }
+
+    50% {
+        transform: translateY(15px);
+    }
 }
 
-/* .scaling-image {
-    animation: scaleAnimation 4s ease-in-out infinite;
-} */
+.updown-dot {
+    position: relative;
+    animation: scaleAnimation 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
