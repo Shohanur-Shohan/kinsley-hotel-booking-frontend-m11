@@ -16,6 +16,7 @@ html {
 
 .active {
     color: #3B61DD;
+    font-weight: 600;
 }
 
 .bg-overlay {

@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Hero from "../../components/Home/Hero/Hero";
+// import HotelFeatures from "../../components/Home/HotelFeatures/HotelFeatures";
+import About from "../../components/Home/About/About";
 
 const Home = () => {
   return (
@@ -8,7 +10,8 @@ const Home = () => {
         <title>Kinsley-Hotel | Home</title>
       </Helmet>
       <Hero />
-      <div className="h-screen"></div>
+      {/* <HotelFeatures /> */}
+      <About />
     </main>
   );
 };

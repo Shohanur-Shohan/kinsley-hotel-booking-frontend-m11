@@ -1,7 +1,7 @@
 const Hero = () => {
   return (
-    <div className="w-full min-h-[95vh] overflow-hidden">
-      <div className="relative z-0 flex flex-col items-center w-full overflow-hidden bg-center bg-no-repeat bg-cover">
+    <>
+      <div className="relative w-full min-h-[90vh] overflow-hidden z-0 flex flex-col items-center bg-center bg-no-repeat bg-cover">
         {/* Video Background */}
         <video
           src="/assets/hotel.mp4"
@@ -84,7 +84,7 @@ const Hero = () => {
             Scroll Down
           </p>
         </div>
-        <div className="border-2 border-[#EBA843] z-10 rounded-full px-2 py-[30px] mb-[120px] sm:mb-[150px] md:mb-[200px]">
+        <div className="border-2 border-[#EBA843] z-10 rounded-full px-2 py-[25px] mb-[120px] sm:mb-[150px] md:mb-[200px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-[10px] h-[10px] updown-dot"
@@ -103,7 +103,7 @@ const Hero = () => {
         {/* grid */}
         <div className="absolute top-0 left-0 z-0 w-full h-full bg-overlay"></div>
       </div>
-    </div>
+    </>
   );
 };
 
