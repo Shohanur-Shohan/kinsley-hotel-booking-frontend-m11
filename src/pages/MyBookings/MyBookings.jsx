@@ -13,7 +13,7 @@ const MyBookings = () => {
         <title>Kinsley-Hotel | My Bookings</title>
       </Helmet>
       <PageHeading title={"My Bookings"} btn={"Home > My Bookings"} />
-      <section className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 min-h-[100vh]">
+      <section className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4 h-fit mb-[60px] md:mb-[100px]">
         <div className="sm:flex sm:items-center sm:justify-between">
           <h2 className="text-lg font-medium text-gray-800 "></h2>
           <div className="flex items-center mt-4 gap-x-3">

@@ -3,6 +3,7 @@ import PageHeading from "../../components/PageHeading/PageHeading";
 import RoomCard from "../../components/Home/AllRooms/RoomCard";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import Newsletter from "../../components/Newsletter";
+import Featured from "../../components/Home/Featured/Featured";
 
 const Rooms = () => {
   return (
@@ -106,12 +107,13 @@ const Rooms = () => {
             />
           </div>
           {/* //cards */}
-
-          {/* reviews */}
-          <Testimonials />
-          {/* newsletter */}
-          <Newsletter />
         </div>
+
+        <Featured />
+        {/* reviews */}
+        <Testimonials />
+        {/* newsletter */}
+        <Newsletter />
       </div>
     </main>
   );
