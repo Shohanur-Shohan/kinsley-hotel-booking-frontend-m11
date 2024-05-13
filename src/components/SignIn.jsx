@@ -1,9 +1,18 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [eye, setEye] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
+  const handleSignin = (data) => {
+    console.log(data);
+  };
   return (
     <div className="max-w-[1200px] min-h-[90vh] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[80px] md:py-[100px] flex items-center justify-center">
       <div className="grid items-center justify-between w-full grid-cols-1 md:grid-cols-2 gap-[40px] md:gap-[20px] lg:gap-[60px]">
@@ -56,7 +65,7 @@ const SignIn = () => {
                 Or
               </div>
               {/* Form */}
-              <form>
+              <form onSubmit={handleSubmit(handleSignin)}>
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
@@ -68,8 +77,9 @@ const SignIn = () => {
                         type="email"
                         id="email"
                         name="email"
+                        {...register("email")}
                         className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
-                        required=""
+                        required
                         placeholder="Enter your email"
                       />
                       <div className="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
@@ -104,8 +114,9 @@ const SignIn = () => {
                         type={`${eye ? "text" : "password"}`}
                         id="password"
                         name="password"
+                        {...register("password")}
                         className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
-                        required=""
+                        required
                         placeholder=".........."
                       />
                       <div

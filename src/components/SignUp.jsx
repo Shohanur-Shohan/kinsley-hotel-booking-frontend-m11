@@ -1,8 +1,18 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [eye, setEye] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const handleSignup = (data) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -59,7 +69,7 @@ const SignUp = () => {
                   Or
                 </div>
                 {/* Form */}
-                <form>
+                <form onSubmit={handleSubmit(handleSignup)}>
                   <div className="grid gap-y-4">
                     {/* Form Group */}
                     <div>
@@ -71,6 +81,7 @@ const SignUp = () => {
                           type="text"
                           id="name"
                           name="name"
+                          {...register("name")}
                           className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                           placeholder="Enter your name.."
                           required=""
@@ -100,6 +111,7 @@ const SignUp = () => {
                           type="email"
                           id="email"
                           name="email"
+                          {...register("email")}
                           className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                           required=""
                           placeholder="Enter your email"
@@ -130,19 +142,19 @@ const SignUp = () => {
                         <input
                           id="password"
                           name="password"
-                          // {...register("password", {
-                          //   minLength: {
-                          //     value: 6,
-                          //     message:
-                          //       "Password must be at least 6 characters long.",
-                          //   },
-                          //   pattern: {
-                          //     value:
-                          //       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.#!%*?&^])[A-Za-z\d@$.#!%*?&^]*$/,
-                          //     message:
-                          //       "Password must include at least one uppercase, lowercase, digit, and special character.",
-                          //   },
-                          // })}
+                          {...register("password", {
+                            minLength: {
+                              value: 6,
+                              message:
+                                "Password must be at least 6 characters long.",
+                            },
+                            pattern: {
+                              value:
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$.#!%*?&^])[A-Za-z\d@$.#!%*?&^]*$/,
+                              message:
+                                "Password must include at least one uppercase, lowercase, digit, and special character.",
+                            },
+                          })}
                           type={`${eye ? "text" : "password"}`}
                           className="block w-full px-4 py-3 text-sm border border-gray-200 shadow-sm bg-[#fff] rounded-lg focus:border-[#3B61DD] focus:ring-[#3B61DD]"
                           required=""
@@ -163,9 +175,9 @@ const SignUp = () => {
                           />
                         </div>
                       </div>
-                      {/* <p className="text-red-600">
+                      <p className="text-red-600">
                         {errors?.password?.message}
-                      </p> */}
+                      </p>
                     </div>
                     {/* End Form Group */}
                     {/* Checkbox */}

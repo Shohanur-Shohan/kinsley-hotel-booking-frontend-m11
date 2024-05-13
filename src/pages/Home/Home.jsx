@@ -6,6 +6,7 @@ import AllRooms from "../../components/Home/AllRooms/AllRooms";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import Newsletter from "../../components/Newsletter";
 import Map from "../../components/Map/Map";
+import Modal from "./Modal";
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <Testimonials />
       <Map />
       <Newsletter />
+      <Modal />
     </main>
   );
 };
