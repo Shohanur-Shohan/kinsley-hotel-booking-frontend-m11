@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/free-mode";
-import { FreeMode, Autoplay } from "swiper/modules";
+// import "swiper/css/free-mode";
+import { Autoplay } from "swiper/modules";
 import FeaturedCard from "./FeaturedCard";
 import Heading from "../../Heading";
 
@@ -23,8 +23,8 @@ const Featured = () => {
 
       {/* swiper */}
       <Swiper
-        freeMode={true}
-        modules={[FreeMode, Autoplay]}
+        rewind={true}
+        modules={[Autoplay]}
         autoplay={{
           delay: 1500,
           disableOnInteraction: false,

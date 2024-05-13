@@ -2,8 +2,8 @@ import Heading from "../../Heading";
 import Count from "../Count/Count";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/free-mode";
-import { FreeMode, Autoplay } from "swiper/modules";
+// import "swiper/css/free-mode";
+import { Autoplay } from "swiper/modules";
 import RoomCard from "./RoomCard";
 
 const AllRooms = () => {
@@ -26,8 +26,8 @@ const AllRooms = () => {
         {/* content */}
         {/* swiper */}
         <Swiper
-          freeMode={true}
-          modules={[FreeMode, Autoplay]}
+          rewind={true}
+          modules={[Autoplay]}
           autoplay={{
             delay: 1500,
             disableOnInteraction: false,
@@ -50,6 +50,7 @@ const AllRooms = () => {
                 price: "49",
                 limit: "4",
                 size: "100 sft",
+                id: 1,
               }}
             />
           </SwiperSlide>
@@ -62,6 +63,7 @@ const AllRooms = () => {
                 price: "49",
                 limit: "4",
                 size: "100 sft",
+                id: 1,
               }}
             />
           </SwiperSlide>
@@ -74,6 +76,7 @@ const AllRooms = () => {
                 price: "49",
                 limit: "4",
                 size: "100 sft",
+                id: 1,
               }}
             />
           </SwiperSlide>
@@ -86,6 +89,7 @@ const AllRooms = () => {
                 price: "49",
                 limit: "4",
                 size: "100 sft",
+                id: 1,
               }}
             />
           </SwiperSlide>
@@ -98,6 +102,7 @@ const AllRooms = () => {
                 price: "49",
                 limit: "4",
                 size: "100 sft",
+                id: 1,
               }}
             />
           </SwiperSlide>
@@ -106,8 +111,8 @@ const AllRooms = () => {
         {/* swiper */}
         <div className="mt-[16px]">
           <Swiper
-            freeMode={true}
-            modules={[FreeMode, Autoplay]}
+            rewind={true}
+            modules={[Autoplay]}
             autoplay={{
               delay: 2500,
               disableOnInteraction: false,
@@ -130,6 +135,7 @@ const AllRooms = () => {
                   price: "49",
                   limit: "4",
                   size: "100 sft",
+                  id: 1,
                 }}
               />
             </SwiperSlide>
@@ -142,6 +148,7 @@ const AllRooms = () => {
                   price: "49",
                   limit: "4",
                   size: "100 sft",
+                  id: 1,
                 }}
               />
             </SwiperSlide>
@@ -154,6 +161,7 @@ const AllRooms = () => {
                   price: "49",
                   limit: "4",
                   size: "100 sft",
+                  id: 1,
                 }}
               />
             </SwiperSlide>
@@ -166,6 +174,7 @@ const AllRooms = () => {
                   price: "49",
                   limit: "4",
                   size: "100 sft",
+                  id: 1,
                 }}
               />
             </SwiperSlide>
@@ -178,6 +187,7 @@ const AllRooms = () => {
                   price: "49",
                   limit: "4",
                   size: "100 sft",
+                  id: 1,
                 }}
               />
             </SwiperSlide>

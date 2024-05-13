@@ -1,15 +1,26 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const RoomCard = ({ data }) => {
-  const { title, des, image, price, limit, size } = data;
+  const { title, des, image, price, limit, size, review, id } = data;
   return (
     <div className="border-[10px] border-white rounded-[10px]">
-      <div className="w-full overflow-hidden rounded-[8px]">
+      <div className="w-full overflow-hidden rounded-[8px] relative">
         <img
           src={image}
           className="w-full rounded-[8px] hover:scale-[1.05] transition-all duration-300"
           alt="img"
         />
+        {review && (
+          <div className="bg-[#ffffff33] px-4 py-1 absolute top-2 right-2 flex items-center gap-1 rounded-md">
+            <p className="text-white text-[14px] line-clamp-1">{review}</p>
+            <img
+              src="/assets/stars.svg"
+              className="w-[14px] h-[14px]"
+              alt="img"
+            />
+          </div>
+        )}
       </div>
       <div className="px-[10px] md:px-[20px] py-[10px] md:py-[20px] bg-white">
         <div className="bg-[#ecfafb] px-[15px] sm:px-[25px] py-3 rounded-full flex items-center justify-start gap-6">
@@ -43,9 +54,18 @@ const RoomCard = ({ data }) => {
             </div>
             <p>Per Night</p>
           </div>
-          <div className="bg-[#3B61DD] text-[15px] text-white tracking-[2px] px-[25px] sm:px-[35px] py-2 sm:py-3 z-20 hover:bg-[#4470FE] rounded-full">
-            Book
-          </div>
+          {id ? (
+            <Link
+              to={`/room-details/${id}`}
+              className="bg-[#3B61DD] text-[15px] text-white tracking-[2px] px-[25px] sm:px-[35px] py-2 sm:py-3 z-20 hover:bg-[#4470FE] rounded-full cursor-pointer"
+            >
+              Room Details
+            </Link>
+          ) : (
+            <div className="bg-[#3B61DD] text-[15px] text-white tracking-[2px] px-[25px] sm:px-[35px] py-2 sm:py-3 z-20 hover:bg-[#4470FE] rounded-full cursor-pointer">
+              Book Now
+            </div>
+          )}
         </div>
       </div>
     </div>
