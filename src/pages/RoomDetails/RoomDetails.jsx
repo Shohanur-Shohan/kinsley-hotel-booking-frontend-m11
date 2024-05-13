@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import PageHeading from "../../components/PageHeading/PageHeading";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Calendar, DateRange } from "react-date-range";
+import { DateRange } from "react-date-range";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
@@ -10,6 +9,7 @@ import { FreeMode, Thumbs } from "swiper/modules";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css";
 import { addDays } from "date-fns";
+import Testimonials from "../../components/Home/Testimonials/Testimonials";
 
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -139,45 +139,71 @@ const RoomDetails = () => {
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       <div className="col-span-1">
                         <label
-                          htmlFor="price"
+                          htmlFor="userName"
                           className="block mb-2 font-medium text-gray-900 text-md"
                         >
-                          Item Price
+                          Username
                         </label>
                         <input
                           type="text"
-                          name="price"
-                          id="price"
+                          name="userName"
+                          id="userName"
                           className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                          placeholder="Enter item price.."
+                          placeholder="Enter your username.."
                           required
                         />
                       </div>
 
                       <div className="col-span-1">
                         <label
-                          htmlFor="rating"
+                          htmlFor="email"
                           className="block mb-2 font-medium text-gray-900 text-md"
                         >
-                          Item Rating
+                          Email
                         </label>
                         <input
                           type="text"
-                          name="rating"
-                          id="rating"
+                          name="email"
+                          id="email"
                           className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                          placeholder="Enter item rating.."
+                          placeholder="Enter your email.."
                           required
                         />
                       </div>
                     </div>
                   </div>
                   {/* price and rating */}
+                  <div className="mb-3">
+                    <div className="grid grid-cols-1">
+                      <div className="col-span-1">
+                        <label
+                          htmlFor="rating"
+                          className="block mb-2 font-medium text-gray-900 text-md"
+                        >
+                          Room Rating
+                        </label>
+
+                        <select
+                          name="rating"
+                          id="rating"
+                          className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        >
+                          <option>1 Star</option>
+                          <option>2 Stars</option>
+                          <option>3 Stars</option>
+                          <option>4 Stars</option>
+                          <option defaultChecked>5 Stars</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                   {/* End Form Group */}
                   <div className="mb-3">
                     <div className="grid grid-cols-1 gap-3">
                       <div className="col-span-1">
                         <textarea
+                          name="message"
+                          id="message"
                           className=" h-[150px] bg-[#fff] border border-none text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                           placeholder="Enter youe review.."
                         ></textarea>
@@ -233,7 +259,7 @@ const RoomDetails = () => {
                 editableDateInputs={true}
                 onChange={(item) => setDateState([item.selection])}
                 moveRangeOnFirstSelection={false}
-                minDate={addDays(new Date(), -30)}
+                minDate={addDays(new Date(), 0)}
                 maxDate={addDays(new Date(), 60)}
                 ranges={dateState}
               />
@@ -249,6 +275,7 @@ const RoomDetails = () => {
           </div>
         </div>
       </div>
+      <Testimonials />
     </main>
   );
 };
