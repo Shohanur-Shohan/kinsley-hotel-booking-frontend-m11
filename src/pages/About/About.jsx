@@ -3,6 +3,8 @@ import Heading from "../../components/Heading";
 import AboutFeatures from "../../components/Home/About/AboutFeatures";
 import Team from "../../components/Home/About/Team";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
+import PageHeading from "../../components/PageHeading/PageHeading";
+import Map from "../../components/Map/Map";
 
 const About = () => {
   return (
@@ -10,16 +12,16 @@ const About = () => {
       <Helmet>
         <title>Kinsley-Hotel | About</title>
       </Helmet>
+      <PageHeading
+        title={"About our Hotel"}
+        des={
+          "Select your perfect retreat from our range of meticulously curated rooms. Find comfort, style, and convenience tailored to your preferences."
+        }
+        btn={"Home > About"}
+      />
 
-      <div className="w-full bg-[#ECFAFB]  border-t-[20px] border-white py-[100px] px-2 sm:px-4">
+      <div className="w-full bg-[#F2FFFF]  py-[100px] px-2 sm:px-4">
         <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4">
-          <Heading
-            title={"What We Offer For You "}
-            des={
-              "Select your perfect retreat from our range of meticulously curated rooms. Find comfort, style, and convenience tailored to your preferences."
-            }
-            btn={"Services"}
-          />
           <AboutFeatures />
           <div className="w-full my-[60px] md:my-[100px]">
             <Heading
@@ -31,6 +33,7 @@ const About = () => {
             <Team />
           </div>
           <Testimonials />
+          <Map />
         </div>
       </div>
     </main>
