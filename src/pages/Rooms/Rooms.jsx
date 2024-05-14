@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import PageHeading from "../../components/PageHeading/PageHeading";
-import RoomCard from "../../components/Home/AllRooms/RoomCard";
+// import RoomCard from "../../components/Home/AllRooms/RoomCard";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import Newsletter from "../../components/Newsletter";
 import Featured from "../../components/Home/Featured/Featured";
@@ -40,7 +40,7 @@ const Rooms = () => {
             </form>
           </div>
           {/* //cards */}
-          <div className="grid items-center justify-center w-full grid-cols-1 gap-3 mt-5 md:grid-cols-2 lg:grid-cols-3">
+          {/* <div className="grid items-center justify-center w-full grid-cols-1 gap-3 mt-5 md:grid-cols-2 lg:grid-cols-3">
             <RoomCard
               data={{
                 title: "Deluxe room",
@@ -113,7 +113,7 @@ const Rooms = () => {
                 review: 5,
               }}
             />
-          </div>
+          </div> */}
           {/* //cards */}
         </div>
 

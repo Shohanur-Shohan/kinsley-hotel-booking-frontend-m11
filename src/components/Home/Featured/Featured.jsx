@@ -4,8 +4,11 @@ import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import FeaturedCard from "./FeaturedCard";
 import Heading from "../../Heading";
+// import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const Featured = () => {
+  // const query = useQuery({ queryKey: ["todos"], queryFn: getTodos });
+
   return (
     <div className="w-full bg-[#ECFAFB]  border-white pt-[80] sm:pt-[100px] pb-[200px] px-2 sm:px-4">
       <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4">
