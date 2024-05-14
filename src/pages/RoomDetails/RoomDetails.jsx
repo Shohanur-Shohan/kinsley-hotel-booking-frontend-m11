@@ -12,9 +12,12 @@ import { addDays } from "date-fns";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import Loader from "../../components/Loaders/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { singleRoomDetails } from "../../utils/api";
+import { useParams } from "react-router-dom";
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const { loading } = useContext(AuthContext);
+  const { loading, user } = useContext(AuthContext);
 
   const [dateState, setDateState] = useState([
     {
@@ -23,6 +26,14 @@ const RoomDetails = () => {
       key: "selection",
     },
   ]);
+  const { id } = useParams();
+  const email = user?.email;
+  const username = email.substring(0, email.indexOf("@"));
+
+  const { data, isLoading, isPending } = useQuery({
+    queryKey: ["singleRoomDetails"],
+    queryFn: () => singleRoomDetails(id),
+  });
 
   const handleBook = (date) => {
     console.log(date, "clicked");
@@ -31,6 +42,11 @@ const RoomDetails = () => {
   if (loading) {
     return <Loader />;
   }
+
+  if (isLoading || isPending) {
+    return <Loader />;
+  }
+  console.log(data);
 
   return (
     <main>
@@ -56,30 +72,13 @@ const RoomDetails = () => {
                 modules={[FreeMode, Thumbs]}
                 className="mySwiper2"
               >
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/08/room-1.jpg"
-                    className=""
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/12/room-3.jpg"
-                    className=""
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/12/room-2.jpg"
-                    className=""
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/12/room-4.jpg"
-                    className=""
-                  />
-                </SwiperSlide>
+                {data?.images.map((img, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <img src={img} className="w-full" />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
               <Swiper
                 onSwiper={setThumbsSwiper}
@@ -91,46 +90,22 @@ const RoomDetails = () => {
                 modules={[FreeMode, Thumbs]}
                 className="mySwiper"
               >
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/08/room-1.jpg"
-                    className="rounded-[4px]"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/12/room-3.jpg"
-                    className="rounded-[4px]"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/12/room-2.jpg"
-                    className="rounded-[4px]"
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src="https://kinsley.bslthemes.com/wp-content/uploads/2021/12/room-4.jpg"
-                    className="rounded-[4px]"
-                  />
-                </SwiperSlide>
+                {data?.images.map((img, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <img src={img} className="rounded-[4px]" />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </div>
             {/* content */}
             <div className="my-[50px]">
               <h1 className="mb-[30px] text-[#383a4e] text-[24px] font-semibold">
-                Kinsley is waiting for you!
+                {data?.room_name}
               </h1>
               <p className="text-[14px] sm:text-[15px] text-[#64688c]">
-                Image for cattle earth. May one Which life divide sea. Optio
-                veniam quibusdam fugit aspernatur ratione rerum necessitatibus
-                ipsa eligendi? Laudantium beatae aut earum ab doloribus tempore
-                veritatis repellat natus illo, veniam quibusdam fugit aspernatur
-                cumque harum quos esse libero nesciunt, molestiae saepe,
-                possimus a suscipit! Minima aspernatur quod maxime quis facere
-                facilis magnam, animi, quia id nihil reiciendis laboriosam,
-                suscipit explicabo amet quasi recusandae at
+                {data?.description}
               </p>
             </div>
             {/* content */}
@@ -155,6 +130,7 @@ const RoomDetails = () => {
                           type="text"
                           name="userName"
                           id="userName"
+                          defaultValue={username}
                           className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                           placeholder="Enter your username.."
                           required
@@ -172,6 +148,7 @@ const RoomDetails = () => {
                           type="text"
                           name="email"
                           id="email"
+                          defaultValue={email}
                           className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                           placeholder="Enter your email.."
                           required
@@ -238,7 +215,7 @@ const RoomDetails = () => {
                   className="w-[16px] h-[16px]"
                   alt="icon"
                 />
-                <p className="text-[14px]">Adults: 4</p>
+                <p className="text-[14px]">Adults: {data?.room_info?.adults}</p>
               </div>
               <div className="flex items-center justify-start gap-3">
                 <img
@@ -246,14 +223,14 @@ const RoomDetails = () => {
                   className="w-[16px] h-[16px]"
                   alt="icon"
                 />
-                <p className="text-[14px]">Size: 100sft</p>
+                <p className="text-[14px]">Size: {data?.room_info?.size}</p>
               </div>
             </div>
             <div className="bg-[#FEFEFE] my-shadow px-[15px] sm:px-[25px] py-5 rounded-[8px] my-[20px]">
               <p className="text-[#383a4e] font-medium">Price srarts at</p>
               <h1 className="text-[#383a4e]">
                 <span className="text-[#64BC5F] text-[36px] font-semibold">
-                  $49
+                  ${data?.price}
                 </span>{" "}
                 per night
               </h1>

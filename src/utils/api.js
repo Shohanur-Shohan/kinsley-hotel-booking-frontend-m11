@@ -11,3 +11,11 @@ export const allRoomsDes = async () => {
   const result = await res?.data;
   return result;
 };
+
+export const singleRoomDetails = async (id) => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_SITE_URL}/room-details/${id}`
+  );
+  const result = res?.data;
+  return result;
+};
