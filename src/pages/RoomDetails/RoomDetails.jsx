@@ -46,7 +46,7 @@ const RoomDetails = () => {
   if (isLoading || isPending) {
     return <Loader />;
   }
-  console.log(data);
+  // console.log(data);
 
   return (
     <main>
@@ -133,6 +133,7 @@ const RoomDetails = () => {
                           defaultValue={username}
                           className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                           placeholder="Enter your username.."
+                          disabled
                           required
                         />
                       </div>
@@ -151,6 +152,7 @@ const RoomDetails = () => {
                           defaultValue={email}
                           className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                           placeholder="Enter your email.."
+                          disabled
                           required
                         />
                       </div>

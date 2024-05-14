@@ -44,7 +44,7 @@ const RoomCard2 = ({ roomdata }) => {
         <h1 className="text-[#383a4e] font-semibold text-[24px] line-clamp-1 mt-[24px] mb-[16px]">
           {title}
         </h1>
-        <p className="text-[#64688c] text-[14px] sm:text-[15px] line-clamp-3">
+        <p className="text-[#64688c] text-[14px] sm:text-[15px] line-clamp-2 h-[50px]">
           {des}
         </p>
         <div className="flex items-center justify-between mt-[22px]">

@@ -127,7 +127,7 @@ const Header = () => {
                     <img
                       alt="avatar"
                       className="object cover "
-                      src={`${user?.photoURL || "/assets/no-profile.png"} `}
+                      src={`${user?.photoURL || "/assets/noProfile.svg"} `}
                     />
                   </div>
                 </div>

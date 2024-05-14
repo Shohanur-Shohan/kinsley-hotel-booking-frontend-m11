@@ -11,6 +11,7 @@ import {
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import auth from "../config/firebase.config";
+import { generateToken, removeToken } from "../utils/api";
 
 export const AuthContext = createContext(null);
 
@@ -62,16 +63,34 @@ const FirebaseAuthProvider = ({ children }) => {
 
   //onAuthStateChanged
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (user) => {
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       //   setLoading(true);
-      setUser(user);
+      setUser(currentUser);
       setLoading(false);
+      const userEmail = currentUser?.email || user?.email;
+      const loggedUser = { email: userEmail };
+
+      //generate token
+      if (user) {
+        (async () => {
+          const result = await generateToken(loggedUser);
+          console.log("logged in", result);
+          return result;
+        })();
+      } else {
+        //remove token
+        (async () => {
+          const result = await removeToken(loggedUser);
+          console.log("logged out", result);
+          return result;
+        })();
+      }
     });
 
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [user]);
 
   //
   const authInfo = {

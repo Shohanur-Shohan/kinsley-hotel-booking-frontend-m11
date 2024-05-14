@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../providers/FirebaseAuthProvider";
 import { Bounce, toast } from "react-toastify";
@@ -9,6 +9,7 @@ const SignIn = () => {
   const { setLoading, logInUser, setUser, handleGoogleLogin } =
     useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
@@ -39,7 +40,7 @@ const SignIn = () => {
             transition: Bounce,
           });
         }
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         const errorMessage = error;
@@ -85,7 +86,7 @@ const SignIn = () => {
           theme: "light",
           transition: Bounce,
         });
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         const errorMessage = error;
