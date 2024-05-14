@@ -1,17 +1,130 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/FirebaseAuthProvider";
+import { Bounce, toast } from "react-toastify";
+
+// firebase
 
 const SignUp = () => {
+  const {
+    createUser,
+    logOut,
+    updateCurrentUser,
+    setLoading,
+    handleGoogleLogin,
+  } = useContext(AuthContext);
   const [eye, setEye] = useState(false);
+
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleSignup = (data) => {
-    console.log(data);
+  const handleSignUp = (data) => {
+    const displayName = data?.name;
+    const email = data?.email;
+    const photoURL = data?.photoUrl;
+    const password = data?.password;
+
+    //create user
+    createUser(email, password)
+      .then((userCredential) => {
+        // Signed up
+        console.log(userCredential, "from signUp");
+
+        updateCurrentUser(displayName, photoURL);
+        if (userCredential?.user) {
+          toast.success("Registration Success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        }
+        // signout
+        logOut();
+        setLoading(false);
+        navigate("/login");
+      })
+      .catch((error) => {
+        const errorMessage = error;
+        const errorCode = error.code;
+        console.log(errorMessage, errorCode, "from signUp");
+        toast.error(
+          `${
+            errorCode ===
+            ("auth/account-exists-with-different-credential" ||
+              "auth/email-already-in-use")
+              ? "Email already exists"
+              : "Registration Failed"
+          }`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
+        setLoading(false);
+      });
+  };
+
+  //google
+  const handleGoogle = () => {
+    handleGoogleLogin()
+      .then((result) => {
+        console.log(result?.user);
+        toast.success("Registration Success", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorMessage = error;
+        const errorCode = error.code;
+        console.log(errorMessage, errorCode, "from signUp");
+        toast.error(
+          `${
+            errorCode ===
+            ("auth/account-exists-with-different-credential" ||
+              "auth/email-already-in-use")
+              ? "Email already exists"
+              : "Registration Failed"
+          }`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
+      });
   };
 
   return (
@@ -38,7 +151,10 @@ const SignUp = () => {
                 </p>
               </div>
               <div className="mt-5">
-                <button className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none ">
+                <button
+                  onClick={handleGoogle}
+                  className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+                >
                   <svg
                     className="w-4 h-auto"
                     width={46}
@@ -69,7 +185,7 @@ const SignUp = () => {
                   Or
                 </div>
                 {/* Form */}
-                <form onSubmit={handleSubmit(handleSignup)}>
+                <form onSubmit={handleSubmit(handleSignUp)}>
                   <div className="grid gap-y-4">
                     {/* Form Group */}
                     <div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { DateRange } from "react-date-range";
@@ -10,9 +10,12 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css";
 import { addDays } from "date-fns";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
-
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import Loader from "../../components/Loaders/Loader";
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const { loading } = useContext(AuthContext);
+
   const [dateState, setDateState] = useState([
     {
       startDate: new Date(),
@@ -24,6 +27,10 @@ const RoomDetails = () => {
   const handleBook = (date) => {
     console.log(date, "clicked");
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <main>

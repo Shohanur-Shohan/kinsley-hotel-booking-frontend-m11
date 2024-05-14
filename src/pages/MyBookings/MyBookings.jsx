@@ -4,9 +4,18 @@ import { useState } from "react";
 import GridData from "./GridData";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import Loader from "../../components/Loaders/Loader";
 
 const MyBookings = () => {
   const [tableGrid, settableGrid] = useState(false);
+
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <main>
       <Helmet>

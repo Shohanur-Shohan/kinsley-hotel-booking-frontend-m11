@@ -5,8 +5,16 @@ import Team from "../../components/Home/About/Team";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import PageHeading from "../../components/PageHeading/PageHeading";
 import Map from "../../components/Map/Map";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import Loader from "../../components/Loaders/Loader";
 
 const About = () => {
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <main>
       <Helmet>

@@ -4,8 +4,16 @@ import RoomCard from "../../components/Home/AllRooms/RoomCard";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import Newsletter from "../../components/Newsletter";
 import Featured from "../../components/Home/Featured/Featured";
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import Loader from "../../components/Loaders/Loader";
+import { useContext } from "react";
 
 const Rooms = () => {
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <main>
       <Helmet>

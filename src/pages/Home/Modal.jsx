@@ -35,7 +35,7 @@ const Modal = () => {
         </div>
         <div className="mt-4 text-sm">
           <p className="text-center">
-            Valid until <span className="font-semibold">December 31, 2023</span>
+            Valid until <span className="font-semibold">December 31, 2024</span>
           </p>
           <p className="text-center">Terms and conditions apply.</p>
         </div>

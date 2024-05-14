@@ -6,9 +6,17 @@ import AllRooms from "../../components/Home/AllRooms/AllRooms";
 import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import Newsletter from "../../components/Newsletter";
 import Map from "../../components/Map/Map";
-import Modal from "./Modal";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import Loader from "../../components/Loaders/Loader";
 
 const Home = () => {
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <main>
       <Helmet>
@@ -21,7 +29,6 @@ const Home = () => {
       <Testimonials />
       <Map />
       <Newsletter />
-      <Modal />
     </main>
   );
 };

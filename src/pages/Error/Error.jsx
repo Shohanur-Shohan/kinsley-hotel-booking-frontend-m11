@@ -1,8 +1,17 @@
 import { Helmet } from "react-helmet-async";
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import Loader from "../../components/Loaders/Loader";
 
 const Error = () => {
+  const { loading } = useContext(AuthContext);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Helmet>

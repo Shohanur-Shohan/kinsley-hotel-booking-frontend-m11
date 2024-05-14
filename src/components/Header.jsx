@@ -1,6 +1,27 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../providers/FirebaseAuthProvider";
+import BtnLoader from "./Loaders/BtnLoader";
+import { Bounce, toast } from "react-toastify";
 
 const Header = () => {
+  const { user, loading, logOut } = useContext(AuthContext);
+
+  //logout
+  const handlelogOut = () => {
+    logOut();
+    toast.success("Logout Success", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
   return (
     <header className="w-full bg-primary shadow-md shadow-b-[5px] -shadow-spread-2">
       <div className="navbar max-w-[1440px] mx-auto justify-between flex items-center px-2 sm:px-4 lg:px-7.5 xl:px-10 py-4">
@@ -95,50 +116,50 @@ const Header = () => {
 
             {/* search & cart*/}
             {/* Profile */}
-            {/* <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="flex items-center justify-center rounded-full avatar"
-              >
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="avatar"
-                    className="object cover "
-                    src={"/assets/avatar.svg"}
-                  />
+            {user && (
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="flex items-center justify-center rounded-full avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="avatar"
+                      className="object cover "
+                      src={`${user?.photoURL || "/assets/no-profile.png"} `}
+                    />
+                  </div>
                 </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[999] px-3 py-4 shadow bg-base-100 rounded-box w-52"
-              >
-                <li className="pl-2 my-2 text-left text-[#383a4e] md:text-[16px]">Profile</li>
-                {user ? (
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content mt-3 z-[999] px-3 py-4 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li className="pl-2 my-2 text-left text-secondary">
+                    Profile
+                  </li>
                   <button
                     onClick={() => handlelogOut()}
-                    className="pl-2 my-2 text-left cursor-pointer text-[#383a4e] md:text-[16px]"
+                    className="pl-2 my-2 text-left cursor-pointer text-secondary"
                   >
                     Logout
                   </button>
-                ) : (
-                  <Link
-                    to={"/login"}
-                    className="pl-2 my-2 text-left cursor-pointer text-[#383a4e] md:text-[16px]"
-                  >
-                    Login
-                  </Link>
-                )}
-              </ul>
-            </div> */}
+                </ul>
+              </div>
+            )}
             {/* Profile */}
-
-            <Link
-              to={"/login"}
-              className="hidden sm:flex px-5 py-[8px] md:px-8 md:py-[10px] hover:bg-transparent bg-[#3b61dd] transition-colors border-[#3b61dd] border rounded-full font-medium hover:text-[#3b61dd] text-[#fff]"
-            >
-              Login
-            </Link>
+            {loading ? (
+              <BtnLoader />
+            ) : (
+              !user && (
+                <Link
+                  to={"/login"}
+                  className="hidden sm:flex px-5 py-[8px] md:px-8 md:py-[10px] hover:bg-transparent bg-[#3b61dd] transition-colors border-[#3b61dd] border rounded-full font-medium hover:text-[#3b61dd] text-[#fff]"
+                >
+                  Login
+                </Link>
+              )
+            )}
           </div>
 
           {/* drawer */}

@@ -1,9 +1,11 @@
+import Modal from "../../../pages/Home/Modal";
 import HotelFeatures from "../HotelFeatures/HotelFeatures";
 
 const About = () => {
   return (
     <div className="w-full bg-[#F0FDFD] border-t-[20px] border-white pb-[100px]">
       <HotelFeatures />
+      <Modal />
       <div className="max-w-[1440px]  mx-auto px-2 sm:px-4 py-2 sm:py-4 mt-[100px] bg-white rounded-2xl">
         <div className="grid grid-cols-1 col-span-1 lg:grid-cols-2">
           <div className="col-span-1">

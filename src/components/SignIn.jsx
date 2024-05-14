@@ -1,18 +1,119 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/FirebaseAuthProvider";
+import { Bounce, toast } from "react-toastify";
 
 const SignIn = () => {
   const [eye, setEye] = useState(false);
+  const { setLoading, logInUser, setUser, handleGoogleLogin } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleSignin = (data) => {
-    console.log(data);
+  const handleSignIn = (data) => {
+    const email = data?.email;
+    const password = data?.password;
+
+    logInUser(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const currentUser = userCredential.user;
+        setUser(currentUser);
+        if (userCredential?.user) {
+          setLoading(false);
+          toast.success("Login Success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        }
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorMessage = error;
+        const errorCode = error.code;
+        console.log(errorMessage, errorCode, "from signin");
+        toast.error(
+          `${
+            errorCode ===
+            ("auth/account-exists-with-different-credential" ||
+              "auth/email-already-in-use")
+              ? "Email already exists"
+              : "Registration Failed"
+          }`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
+        setLoading(false);
+      });
   };
+
+  //google
+  const handleGoogle = () => {
+    handleGoogleLogin()
+      .then((result) => {
+        console.log(result?.user);
+        toast.success("Login Success", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorMessage = error;
+        const errorCode = error.code;
+        console.log(errorMessage, errorCode, "from signin");
+        toast.error(
+          `${
+            errorCode ===
+            ("auth/account-exists-with-different-credential" ||
+              "auth/email-already-in-use")
+              ? "Email already exists"
+              : "Registration Failed"
+          }`,
+          {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          }
+        );
+      });
+  };
+
   return (
     <div className="max-w-[1200px] min-h-[90vh] mx-auto px-2 sm:px-4 lg:px-7.5 xl:px-10 py-[80px] md:py-[100px] flex items-center justify-center">
       <div className="grid items-center justify-between w-full grid-cols-1 md:grid-cols-2 gap-[40px] md:gap-[20px] lg:gap-[60px]">
@@ -34,7 +135,10 @@ const SignIn = () => {
               </p>
             </div>
             <div className="mt-5">
-              <button className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none ">
+              <button
+                onClick={handleGoogle}
+                className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none "
+              >
                 <svg
                   className="w-4 h-auto"
                   width={46}
@@ -65,7 +169,7 @@ const SignIn = () => {
                 Or
               </div>
               {/* Form */}
-              <form onSubmit={handleSubmit(handleSignin)}>
+              <form onSubmit={handleSubmit(handleSignIn)}>
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
