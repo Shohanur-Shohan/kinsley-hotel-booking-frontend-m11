@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { singleRoomDetails } from "../../utils/api";
 import { useParams } from "react-router-dom";
 import RoomReviews from "./RoomReviews";
+import { Bounce, toast } from "react-toastify";
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { loading, user } = useContext(AuthContext);
@@ -35,6 +36,33 @@ const RoomDetails = () => {
   });
 
   const handleBook = (date) => {
+    if (!user) {
+      toast.warn("Login To Book a Room", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    } else if (data?.status !== "available") {
+      toast.warn("Room is not available!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
     console.log(date, "clicked");
   };
 
