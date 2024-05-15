@@ -6,18 +6,33 @@ export const featuredRooms = async () => {
   const result = res?.data;
   return result;
 };
+//all rooms
+export const allRooms = async (path) => {
+  let apiUrl = `${import.meta.env.VITE_SITE_URL}/all-rooms`;
+
+  if (path === "ascending") {
+    apiUrl = `${import.meta.env.VITE_SITE_URL}/all-rooms/asc`;
+  } else if (path === "descending") {
+    apiUrl = `${import.meta.env.VITE_SITE_URL}/all-rooms/des`;
+  }
+
+  const res = await axios.get(`${apiUrl}`);
+  const result = res?.data;
+  // console.log(result);
+  return result;
+};
 
 //all rooms ascending order
 export const allRoomsAsc = async () => {
   const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/all-rooms/asc`);
-  const result = await res?.data;
+  const result = res?.data;
   return result;
 };
 
 //all rooms descending order
 export const allRoomsDes = async () => {
   const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/all-rooms/des`);
-  const result = await res?.data;
+  const result = res?.data;
   return result;
 };
 
