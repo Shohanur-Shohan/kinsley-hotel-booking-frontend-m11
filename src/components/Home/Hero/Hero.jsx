@@ -12,7 +12,12 @@ const Hero = () => {
         ></video>
         {/* content */}
         <div className="z-10 grid items-center justify-center max-w-[1440px] mx-auto mt-[100px] sm:mt-[150px] md:mt-[200px]">
-          <div className="mx-auto w-fit bg-[#ffffff33] px-2 py-1 rounded-full mb-[20px]">
+          <div
+            data-aos="fade-up"
+            data-aos-easing="linear"
+            data-aos-duration="800"
+            className="mx-auto w-fit bg-[#ffffff33] px-2 py-1 rounded-full mb-[20px]"
+          >
             <ul className="flex gap-2">
               <li>
                 <img
@@ -51,10 +56,20 @@ const Hero = () => {
               </li>
             </ul>
           </div>
-          <h1 className="text-white text-[36px] sm:text-[48px] md:text-[56px] xl:text-[78px] font-bold text-center z-10 leading-[40px] sm:leading-[50px] md:leading-[60px] xl:leading-[80px]">
+          <h1
+            data-aos="fade-up"
+            data-aos-easing="linear"
+            data-aos-duration="900"
+            className="text-white text-[36px] sm:text-[48px] md:text-[56px] xl:text-[78px] font-bold text-center z-10 leading-[40px] sm:leading-[50px] md:leading-[60px] xl:leading-[80px]"
+          >
             Welcome to Kinsley
           </h1>
-          <p className="max-w-[400px] md:max-w-[600px] mt-5 mb-[30px] text-[14px] md:text-[15px] px-3 md:px-2 mx-auto text-center text-[#ecfafb] z-10">
+          <p
+            data-aos="fade-up"
+            data-aos-easing="linear"
+            data-aos-duration="1000"
+            className="max-w-[400px] md:max-w-[600px] mt-5 mb-[30px] text-[14px] md:text-[15px] px-3 md:px-2 mx-auto text-center text-[#ecfafb] z-10"
+          >
             Experience the epitome of luxury by booking your stay at Hoteller.
             Whether it’s a romantic getaway, a family vacation, or a business
             trip,.
@@ -63,7 +78,12 @@ const Hero = () => {
         {/* content */}
         {/* grid */}
         <div className="z-20 items-center justify-center sm:w-full gap-4 mx-auto flex flex-col sm:flex-row w-[320px]">
-          <div className="bg-[#ffffff33] rounded-full  px-2 py-2">
+          <div
+            data-aos="fade-right"
+            data-aos-easing="linear"
+            data-aos-duration="1200"
+            className="bg-[#ffffff33] rounded-full  px-2 py-2"
+          >
             <div className="bg-[#3B61DD] px-[20px] sm:px-[30px] py-3 sm:py-4 z-20 hover:bg-[#4470FE] rounded-full flex items-center justify-around gap-3">
               <img src="/assets/play.svg" className="w-6 h-6 " alt="img" />
               <p className="text-[15px] text-white tracking-[2px]">
@@ -71,7 +91,12 @@ const Hero = () => {
               </p>
             </div>
           </div>
-          <div className="bg-[#ffffff33] rounded-full  px-2 py-2">
+          <div
+            data-aos="fade-left"
+            data-aos-easing="linear"
+            data-aos-duration="1200"
+            className="bg-[#ffffff33] rounded-full  px-2 py-2"
+          >
             <div className="bg-[#eba744] px-[20px] sm:px-[30px] py-3 sm:py-4 z-20 hover:bg-[#FFC04E] rounded-full flex items-center justify-around gap-3">
               <img src="/assets/booking.svg" className="w-5 h-5 " alt="img" />
               <p className="text-[15px] text-white tracking-[2px]">Book Now</p>

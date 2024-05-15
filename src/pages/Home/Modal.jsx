@@ -6,8 +6,12 @@ const Modal = () => {
   useEffect(() => {
     if (modalShown) {
       const modal = document.getElementById("my_modal_4");
-      modal.showModal();
+
+      const timeout = setTimeout(() => {
+        modal.showModal();
+      }, 3000);
       // setModalShown(false);
+      return () => clearTimeout(timeout);
     }
   }, [modalShown]);
 

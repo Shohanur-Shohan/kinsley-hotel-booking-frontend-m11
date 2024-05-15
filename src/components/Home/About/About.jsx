@@ -8,14 +8,26 @@ const About = () => {
       <Modal />
       <div className="max-w-[1440px]  mx-auto px-2 sm:px-4 py-2 sm:py-4 mt-[100px] bg-white rounded-2xl">
         <div className="grid grid-cols-1 col-span-1 lg:grid-cols-2">
-          <div className="col-span-1">
+          <div
+            data-aos="fade-right"
+            data-aos-anchor-placement="top-bottom"
+            data-aos-easing="linear"
+            data-aos-duration={1000}
+            className="col-span-1"
+          >
             <img
               className="w-full rounded-lg lg:rounded-none lg:rounded-tl-lg"
               src="/assets/about-t1.jpg"
               alt="img"
             />
           </div>
-          <div className="col-span-1 pl-[15px] sm:pl-[30px] flex items-center">
+          <div
+            data-aos="fade-left"
+            data-aos-anchor-placement="top-bottom"
+            data-aos-easing="linear"
+            data-aos-duration={1000}
+            className="col-span-1 pl-[15px] sm:pl-[30px] flex items-center"
+          >
             <div className="my-[40px] md:my-[60px] md:m-0">
               <h1 className="text-[#383a4e] text-[24px] lg:text-[38px] font-bold leading-[40px] lg:leading-[50px]">
                 We have 17+ years of Experience
@@ -32,7 +44,13 @@ const About = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 col-span-1 lg:grid-cols-2">
-          <div className="col-span-1 order-2 lg:order-1 pl-[15px] sm:pl-[30px] md:pr-[50px] flex items-center">
+          <div
+            data-aos="fade-right"
+            data-aos-anchor-placement="top-bottom"
+            data-aos-easing="linear"
+            data-aos-duration={1000}
+            className="col-span-1 order-2 lg:order-1 pl-[15px] sm:pl-[30px] md:pr-[50px] flex items-center"
+          >
             <div className="my-[40px] md:my-[60px] md:m-0">
               <h1 className="text-[#383a4e] text-[24px] lg:text-[38px] font-bold leading-[40px] lg:leading-[50px]">
                 Start your Amazing Adventure!
@@ -47,7 +65,13 @@ const About = () => {
               </div>
             </div>
           </div>
-          <div className="order-1 col-span-1 lg:order-2">
+          <div
+            data-aos="fade-left"
+            data-aos-anchor-placement="top-bottom"
+            data-aos-easing="linear"
+            data-aos-duration={1000}
+            className="order-1 col-span-1 lg:order-2"
+          >
             <img
               className="w-full rounded-lg lg:rounded-none lg:rounded-br-lg"
               src="/assets/about-t2.jpg"
