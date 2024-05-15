@@ -1,5 +1,12 @@
 import axios from "axios";
 
+//featured
+export const featuredRooms = async () => {
+  const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/featured`);
+  const result = res?.data;
+  return result;
+};
+
 //all rooms ascending order
 export const allRoomsAsc = async () => {
   const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/all-rooms/asc`);

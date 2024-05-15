@@ -9,12 +9,12 @@ import { FreeMode, Thumbs } from "swiper/modules";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css";
 import { addDays } from "date-fns";
-import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import Loader from "../../components/Loaders/Loader";
 import { useQuery } from "@tanstack/react-query";
 import { singleRoomDetails } from "../../utils/api";
 import { useParams } from "react-router-dom";
+import RoomReviews from "./RoomReviews";
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { loading, user } = useContext(AuthContext);
@@ -28,7 +28,6 @@ const RoomDetails = () => {
   ]);
   const { id } = useParams();
   const email = user?.email;
-  const username = email.substring(0, email.indexOf("@"));
 
   const { data, isLoading, isPending } = useQuery({
     queryKey: ["singleRoomDetails"],
@@ -126,16 +125,31 @@ const RoomDetails = () => {
                         >
                           Username
                         </label>
-                        <input
-                          type="text"
-                          name="userName"
-                          id="userName"
-                          defaultValue={username}
-                          className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                          placeholder="Enter your username.."
-                          disabled
-                          required
-                        />
+                        {user ? (
+                          <input
+                            type="text"
+                            name="userName"
+                            id="userName"
+                            defaultValue={email.substring(
+                              0,
+                              email.indexOf("@")
+                            )}
+                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Enter your username.."
+                            disabled
+                            required
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            name="userName"
+                            id="userName"
+                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Enter your username.."
+                            disabled
+                            required
+                          />
+                        )}
                       </div>
 
                       <div className="col-span-1">
@@ -145,16 +159,28 @@ const RoomDetails = () => {
                         >
                           Email
                         </label>
-                        <input
-                          type="text"
-                          name="email"
-                          id="email"
-                          defaultValue={email}
-                          className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                          placeholder="Enter your email.."
-                          disabled
-                          required
-                        />
+                        {user ? (
+                          <input
+                            type="text"
+                            name="email"
+                            id="email"
+                            defaultValue={email}
+                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Enter your email.."
+                            disabled
+                            required
+                          />
+                        ) : (
+                          <input
+                            type="text"
+                            name="email"
+                            id="email"
+                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Enter your email.."
+                            disabled
+                            required
+                          />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -237,8 +263,22 @@ const RoomDetails = () => {
                 per night
               </h1>
             </div>
-            <div className="bg-[#64bc5f] px-[20px] w-full text-center sm:px-[30px] py-3 sm:py-3 rounded-[8px]">
-              <p className="text-[15px] text-white tracking-[2px]">Avaliable</p>
+            <div
+              className={`${
+                data?.status == "available" ? "bg-[#64BC5F]" : "bg-[#c63a3a]"
+              } px-[20px] w-full text-center sm:px-[30px] py-3 sm:py-3 rounded-[8px]`}
+            >
+              <p className="text-[15px] text-white tracking-[2px] capitalize">
+                {data?.status}
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center w-full my-4">
+              <a
+                href={"#roomReviews"}
+                className="w-full px-6 py-4 text-lg font-semibold text-center text-indigo-600 transition-all duration-500 bg-white rounded-full shadow-sm whitespace-nowrap shadow-transparent hover:bg-indigo-100 hover:shadow-indigo-200"
+              >
+                See All Reviews
+              </a>
             </div>
             <div className="bg-[#FEFEFE] my-shadow px-[15px] sm:px-[25px] py-5 rounded-[8px] my-[20px]">
               <DateRange
@@ -253,7 +293,7 @@ const RoomDetails = () => {
                 onClick={() => handleBook(dateState)}
                 className="bg-[#3B61DD] px-[20px] w-full text-center sm:px-[30px] py-3 sm:py-3 hover:bg-[#4470FE] rounded-full"
               >
-                <p className="text-[15px] text-white tracking-[2px]">
+                <p className="text-[15px] text-white tracking-[2px] cursor-pointer">
                   Book Now
                 </p>
               </div>
@@ -261,7 +301,7 @@ const RoomDetails = () => {
           </div>
         </div>
       </div>
-      <Testimonials />
+      <RoomReviews />
     </main>
   );
 };

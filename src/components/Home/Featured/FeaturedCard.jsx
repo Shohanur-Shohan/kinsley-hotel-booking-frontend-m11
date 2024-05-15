@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-const FeaturedCard = ({ image, subTitle, title, des }) => {
+import { Link } from "react-router-dom";
+const FeaturedCard = ({ image, subTitle, title, des, id }) => {
   return (
     <div className="col-span-1 border-[10px] rounded-[10px] border-white relative group">
       <img src={image} className="w-full" alt="img" />
@@ -11,9 +12,11 @@ const FeaturedCard = ({ image, subTitle, title, des }) => {
           {title}
         </p>
         <p className="text-[15px] text-[#383a4e] line-clamp-2 ">{des}</p>
-        <p className="mt-2 font-semibold text-[#EBA943] underline cursor-pointer">
-          Book Now
-        </p>
+        <Link to={`/room-details/${id}`}>
+          <p className="mt-2 font-semibold text-[#EBA943] underline cursor-pointer">
+            Book Now
+          </p>
+        </Link>
       </div>
     </div>
   );
@@ -23,5 +26,6 @@ FeaturedCard.propTypes = {
   subTitle: PropTypes.string,
   title: PropTypes.string,
   des: PropTypes.string,
+  id: PropTypes.string,
 };
 export default FeaturedCard;

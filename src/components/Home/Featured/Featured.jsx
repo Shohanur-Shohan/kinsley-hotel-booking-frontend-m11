@@ -4,10 +4,22 @@ import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import FeaturedCard from "./FeaturedCard";
 import Heading from "../../Heading";
+import { useQuery } from "@tanstack/react-query";
+import { featuredRooms } from "../../../utils/api";
+import Loader from "../../Loaders/Loader";
 // import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const Featured = () => {
-  // const query = useQuery({ queryKey: ["todos"], queryFn: getTodos });
+  const { data, isPending, isLoading } = useQuery({
+    queryKey: ["featuredRooms"],
+    queryFn: featuredRooms,
+  });
+
+  if (isPending || isLoading) {
+    return <Loader />;
+  }
+
+  // console.log("featured", data);
 
   return (
     <div className="w-full bg-[#ECFAFB]  border-white pt-[80] sm:pt-[100px] pb-[200px] px-2 sm:px-4">
@@ -41,56 +53,19 @@ const Featured = () => {
         }}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <FeaturedCard
-            image={"/assets/featured5.jpg"}
-            subTitle={"View from the sea"}
-            title={"Deluxe room"}
-            des={
-              "Indulge in luxury with our deluxe room offering premium comfort and exquisite amenities.Experience unparalleled relaxation and sophistication in our deluxe accommodations"
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <FeaturedCard
-            image={"/assets/featured5.jpg"}
-            subTitle={"View from the sea"}
-            title={"Deluxe room"}
-            des={
-              "Indulge in luxury with our deluxe room offering premium comfort and exquisite amenities.Experience unparalleled relaxation and sophistication in our deluxe accommodations"
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <FeaturedCard
-            image={"/assets/featured5.jpg"}
-            subTitle={"View from the sea"}
-            title={"Deluxe room"}
-            des={
-              "Indulge in luxury with our deluxe room offering premium comfort and exquisite amenities.Experience unparalleled relaxation and sophistication in our deluxe accommodations"
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <FeaturedCard
-            image={"/assets/featured5.jpg"}
-            subTitle={"View from the sea"}
-            title={"Deluxe room"}
-            des={
-              "Indulge in luxury with our deluxe room offering premium comfort and exquisite amenities.Experience unparalleled relaxation and sophistication in our deluxe accommodations"
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <FeaturedCard
-            image={"/assets/featured5.jpg"}
-            subTitle={"View from the sea"}
-            title={"Deluxe room"}
-            des={
-              "Indulge in luxury with our deluxe room offering premium comfort and exquisite amenities.Experience unparalleled relaxation and sophistication in our deluxe accommodations"
-            }
-          />
-        </SwiperSlide>
+        {data?.map((room) => {
+          return (
+            <SwiperSlide key={room?._id}>
+              <FeaturedCard
+                image={room?.image}
+                subTitle={room?.room_name}
+                title={room?.room_name}
+                des={room?.description}
+                id={room?._id}
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       {/* swiper */}
     </div>

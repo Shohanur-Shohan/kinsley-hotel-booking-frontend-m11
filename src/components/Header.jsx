@@ -69,14 +69,16 @@ const Header = () => {
                 Gallery
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to={"/my-bookings"}
-                className="text-[#383a4e] md:text-[16px]   hover:text-[#3B61DD] transition-colors"
-              >
-                My Bookings
-              </NavLink>
-            </li>
+            {user && (
+              <li>
+                <NavLink
+                  to={"/my-bookings"}
+                  className="text-[#383a4e] md:text-[16px]   hover:text-[#3B61DD] transition-colors"
+                >
+                  My Bookings
+                </NavLink>
+              </li>
+            )}
             <li>
               <NavLink
                 to={"/contact"}
@@ -235,14 +237,16 @@ const Header = () => {
                     Gallery
                   </NavLink>
                 </li>
-                <li className="mb-5 ">
-                  <NavLink
-                    to={"/my-bookings"}
-                    className="my-1 text-[#1e1e1e] border border-transparent   hover:text-[#3B61DD] transition-colors"
-                  >
-                    My Bookings
-                  </NavLink>
-                </li>
+                {user && (
+                  <li className="mb-5 ">
+                    <NavLink
+                      to={"/my-bookings"}
+                      className="my-1 text-[#1e1e1e] border border-transparent   hover:text-[#3B61DD] transition-colors"
+                    >
+                      My Bookings
+                    </NavLink>
+                  </li>
+                )}
                 <li className="mb-5 ">
                   <NavLink
                     to={"/contact"}
