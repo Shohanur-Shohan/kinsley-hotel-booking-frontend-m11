@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import TableData from "./TableData";
 import { useState } from "react";
 import GridData from "./GridData";
 import PageHeading from "../../components/PageHeading/PageHeading";
@@ -7,15 +6,25 @@ import Testimonials from "../../components/Home/Testimonials/Testimonials";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import Loader from "../../components/Loaders/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { myBookedRoom } from "../../utils/api";
+import Table from "./Table";
 
 const MyBookings = () => {
   const [tableGrid, settableGrid] = useState(false);
+  const { loading, user } = useContext(AuthContext);
 
-  const { loading } = useContext(AuthContext);
+  const { data, isLoading, isPending } = useQuery({
+    queryKey: ["myBookedRooms", user?.email],
+    queryFn: () => myBookedRoom(user?.email),
+  });
+
+  console.log(data);
 
   if (loading) {
     return <Loader />;
   }
+  // if ((isLoading, isPending))
   return (
     <main>
       <Helmet>
@@ -49,58 +58,27 @@ const MyBookings = () => {
           </div>
         </div>
         {/* table */}
-        {!tableGrid && (
-          <div className="flex flex-col mt-6">
-            <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div className="overflow-hidden border border-gray-200 md:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-200 ">
-                    <thead className="bg-gray-50 ">
-                      <tr>
-                        <th
-                          scope="col"
-                          className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
-                        >
-                          Room Name
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
-                        >
-                          Booked Date
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
-                        >
-                          End Date
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
-                        >
-                          Status
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 "
-                        ></th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200 ">
-                      <TableData />
-                      <TableData />
-                      <TableData />
-                    </tbody>
-                  </table>
+        {isLoading || isPending ? (
+          <Loader />
+        ) : (
+          !tableGrid && (
+            <div className="flex flex-col mt-6">
+              <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                  <Table data={data} />
                 </div>
               </div>
             </div>
-          </div>
+          )
         )}
+        {isLoading || isPending ? (
+          <Loader />
+        ) : (
+          tableGrid && <GridData data={data} />
+        )}
+
         {/* table */}
         {/* grid */}
-        {tableGrid && <GridData />}
         {/* grid */}
       </section>
 

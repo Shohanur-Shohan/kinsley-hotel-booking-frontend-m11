@@ -45,10 +45,35 @@ export const singleRoomDetails = async (id) => {
   const result = res?.data;
   return result;
 };
-
+//book a room
 export const bookARoom = async ({ roomID, bookData }) => {
   const res = await axios.post(
     `${import.meta.env.VITE_SITE_URL}/roomBooking/${roomID}`,
+    bookData,
+    {
+      withCredentials: true,
+    }
+  );
+  const result = res?.data;
+  return result;
+};
+
+// list of your rooms
+export const myBookedRoom = async (email) => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_SITE_URL}/myRoomBooked/${email}`,
+    {
+      withCredentials: true,
+    }
+  );
+  const result = res?.data;
+  return result;
+};
+
+//update your room
+export const updateARoom = async ({ roomID, bookData }) => {
+  const res = await axios.patch(
+    `${import.meta.env.VITE_SITE_URL}/updateRoomBooking/${roomID}`,
     bookData,
     {
       withCredentials: true,

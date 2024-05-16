@@ -1,8 +1,16 @@
 import { addDays } from "date-fns";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { DateRange } from "react-date-range";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import { fixDate } from "../../utils/GetDate";
+import { updateARoom } from "../../utils/api";
 
-const TableData = () => {
+const TableData = ({ table }) => {
+  const { _id, room_name, image, booked_info } = table;
+  const { user } = useContext(AuthContext);
   const [dateState, setDateState] = useState([
     {
       startDate: new Date(),
@@ -10,9 +18,51 @@ const TableData = () => {
       key: "selection",
     },
   ]);
+  // console.log(table);
 
-  const handleBook = (date) => {
-    console.log(date, "clicked");
+  const handleBook = async (date) => {
+    const startDate = fixDate(date[0]?.startDate);
+    const endDate = fixDate(date[0]?.endDate);
+
+    if (!user) {
+      toast.warn("Login To Book a Room", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    const roomID = _id;
+    const bookData = {
+      date_info: {
+        start_date: startDate,
+        end_date: endDate,
+      },
+    };
+
+    console.log(bookData, "clicked");
+    const result = await updateARoom({ roomID, bookData });
+    console.log(result);
+    if (result) {
+      toast.success("Date Updated", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    return result;
   };
   return (
     <tr>
@@ -20,32 +70,35 @@ const TableData = () => {
         <div className="inline-flex items-center gap-x-3">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center justify-center w-8 h-8">
-              <img src="/assets/room-2.jpg" alt="img" />
+              <img src={image} alt="img" />
             </div>
             <div>
-              <h2 className="font-normal text-gray-800 ">
-                Tech requirements.pdf
-              </h2>
+              <h2 className="font-normal text-gray-800 ">{room_name}</h2>
             </div>
           </div>
         </div>
       </td>
       <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-        Jan 4, 2022
+        {booked_info[0]?.date_info?.start_date}
       </td>
       <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
-        Jan 4, 2022
+        {booked_info[0]?.date_info?.end_date}
       </td>
       <td>
         <div className="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
 
-          <h2 className="text-sm font-normal text-emerald-500">Success</h2>
+          <h2 className="text-sm font-normal text-emerald-500">
+            {booked_info[0]?.room_information?.room_status}
+          </h2>
         </div>
       </td>
       <td className="px-4 py-4 text-sm whitespace-nowrap">
         <div className="flex items-center justify-center gap-x-6">
-          <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+          <Link
+            to={`/room-details/${_id}`}
+            className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+          >
             <svg
               className="w-5 h-5"
               xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +113,7 @@ const TableData = () => {
                 d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
               />
             </svg>
-          </button>
+          </Link>
           <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +162,7 @@ const TableData = () => {
                 editableDateInputs={true}
                 onChange={(item) => setDateState([item.selection])}
                 moveRangeOnFirstSelection={false}
-                minDate={addDays(new Date(), -30)}
+                minDate={addDays(new Date(), 1)}
                 maxDate={addDays(new Date(), 60)}
                 ranges={dateState}
               />
@@ -128,5 +181,7 @@ const TableData = () => {
     </tr>
   );
 };
-
+TableData.propTypes = {
+  table: PropTypes.object,
+};
 export default TableData;

@@ -69,6 +69,7 @@ const RoomDetails = () => {
     }
     const roomID = data?._id;
     const bookData = {
+      booking_id: roomID,
       date_info: {
         start_date: startDate,
         end_date: endDate,
