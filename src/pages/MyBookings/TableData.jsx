@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import { fixDate } from "../../utils/GetDate";
-import { updateARoom } from "../../utils/api";
+import { deleteARoom, updateARoom } from "../../utils/api";
 
 const TableData = ({ table }) => {
   const { _id, room_name, image, booked_info } = table;
@@ -51,6 +51,24 @@ const TableData = ({ table }) => {
     console.log(result);
     if (result) {
       toast.success("Date Updated", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    return result;
+  };
+
+  const deleteRoom = async () => {
+    const result = await deleteARoom(_id);
+    if (result) {
+      toast.warn("Booking Canceled", {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -114,7 +132,10 @@ const TableData = ({ table }) => {
               />
             </svg>
           </Link>
-          <button className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
+          <button
+            onClick={deleteRoom}
+            className="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

@@ -83,6 +83,18 @@ export const updateARoom = async ({ roomID, bookData }) => {
   return result;
 };
 
+//delete your room
+export const deleteARoom = async (roomID) => {
+  const res = await axios.post(
+    `${import.meta.env.VITE_SITE_URL}/deleteRoomBooking/${roomID}`,
+    {
+      withCredentials: true,
+    }
+  );
+  const result = res?.data;
+  return result;
+};
+
 //generate token
 export const generateToken = async (user) => {
   const res = await axios.post(`${import.meta.env.VITE_SITE_URL}/jwt`, user, {

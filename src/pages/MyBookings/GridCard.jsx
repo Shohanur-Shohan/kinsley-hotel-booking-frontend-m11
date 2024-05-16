@@ -1,8 +1,87 @@
 import PropTypes from "prop-types";
+import { useContext, useState } from "react";
+import { DateRange } from "react-date-range";
 import { Link } from "react-router-dom";
+import { deleteARoom, updateARoom } from "../../utils/api";
+import { Bounce, toast } from "react-toastify";
+import { fixDate } from "../../utils/GetDate";
+import { addDays } from "date-fns";
+import { AuthContext } from "../../providers/FirebaseAuthProvider";
 
 const GridCard = ({ data }) => {
-  const { title, des, image, price, limit, size, review, id } = data;
+  const { _id, room_name, image, booked_info, reviews } = data;
+  const { user } = useContext(AuthContext);
+  const [dateState, setDateState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+
+  const handleBook = async (date) => {
+    const startDate = fixDate(date[0]?.startDate);
+    const endDate = fixDate(date[0]?.endDate);
+
+    if (!user) {
+      toast.warn("Login To Book a Room", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    const roomID = _id;
+    const bookData = {
+      date_info: {
+        start_date: startDate,
+        end_date: endDate,
+      },
+    };
+
+    console.log(bookData, "clicked");
+    const result = await updateARoom({ roomID, bookData });
+    console.log(result);
+    if (result) {
+      toast.success("Date Updated", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    return result;
+  };
+
+  const deleteRoom = async () => {
+    const result = await deleteARoom(_id);
+    if (result) {
+      toast.warn("Booking Canceled", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    return result;
+  };
+
   return (
     <div className="border-[1px] border-[#92959A] rounded-[10px]">
       <div className="w-full overflow-hidden rounded-t-[8px] relative">
@@ -11,9 +90,9 @@ const GridCard = ({ data }) => {
           className="w-full rounded-t-[8px] hover:scale-[1.05] transition-all duration-300"
           alt="img"
         />
-        {review && (
+        {reviews && (
           <div className="bg-[#ffffff33] px-4 py-1 absolute top-2 right-2 flex items-center gap-1 rounded-md">
-            <p className="text-white text-[14px] line-clamp-1">{review}</p>
+            <p className="text-white text-[14px] line-clamp-1">4.5</p>
             <img
               src="/assets/stars.svg"
               className="w-[14px] h-[14px]"
@@ -24,22 +103,31 @@ const GridCard = ({ data }) => {
       </div>
       <div className="px-[10px] md:px-[20px] py-[10px] md:py-[20px] bg-white rounded-[8px]">
         <h1 className="text-[#383a4e] font-semibold text-[24px] line-clamp-1 mt-3 mb-[16px]">
-          {title}
+          {room_name}
         </h1>
         <div className="flex items-center justify-start gap-3">
           <p>
             From:{" "}
-            <span className="font-medium text-[#64688c]">Jan 4, 2022</span>
+            <span className="font-medium text-[#64688c]">
+              {" "}
+              {booked_info[0]?.date_info?.start_date}
+            </span>
           </p>
           <p>
-            To: <span className="font-medium text-[#64688c]">Jan 8, 2022</span>
+            To:{" "}
+            <span className="font-medium text-[#64688c]">
+              {" "}
+              {booked_info[0]?.date_info?.end_date}
+            </span>
           </p>
         </div>
         <div className="flex items-center gap-3 mt-2">
           <h2 className="text-sm font-normal text-[#383a4e]">Status: </h2>
 
           <div className="flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60">
-            <h2 className="text-sm font-normal text-emerald-500">Success</h2>
+            <h2 className="text-sm font-normal text-emerald-500">
+              {booked_info[0]?.room_information?.room_status}
+            </h2>
           </div>
         </div>
 
@@ -47,7 +135,9 @@ const GridCard = ({ data }) => {
           <ul className="flex justify-between py-1 text-sm">
             <li>
               <button
-                type="button"
+                onClick={() =>
+                  document.getElementById("my_modal_3").showModal()
+                }
                 className="flex items-center w-full text-gray-700"
               >
                 <svg
@@ -66,10 +156,36 @@ const GridCard = ({ data }) => {
                 </svg>
                 Edit
               </button>
+
+              <dialog id="my_modal_3" className="w-11/12 max-w-4xl modal-box">
+                <form method="dialog">
+                  <button className="absolute bg-[#4470FE] btn btn-md btn-circle right-2 top-2 text-white">
+                    ✕
+                  </button>
+                </form>
+                <div className="bg-[#FEFEFE] my-shadow px-[15px] sm:px-[25px] py-5 rounded-[8px] my-[20px]">
+                  <DateRange
+                    editableDateInputs={true}
+                    onChange={(item) => setDateState([item.selection])}
+                    moveRangeOnFirstSelection={false}
+                    minDate={addDays(new Date(), 1)}
+                    maxDate={addDays(new Date(), 60)}
+                    ranges={dateState}
+                  />
+                  <div
+                    onClick={() => handleBook(dateState)}
+                    className="bg-[#3B61DD] px-[20px] cursor-pointer w-full text-center sm:px-[30px] py-3 sm:py-3 hover:bg-[#4470FE] rounded-full"
+                  >
+                    <p className="text-[15px] text-white tracking-[2px]">
+                      Update Date
+                    </p>
+                  </div>
+                </div>
+              </dialog>
             </li>
             <li>
-              <button
-                type="button"
+              <Link
+                to={`/room-details/${_id}`}
                 className="flex items-center w-full text-gray-700"
               >
                 <svg
@@ -87,11 +203,11 @@ const GridCard = ({ data }) => {
                   />
                 </svg>
                 Preview
-              </button>
+              </Link>
             </li>
             <li>
               <button
-                type="button"
+                onClick={deleteRoom}
                 className="flex items-center w-full text-red-500"
               >
                 <svg
