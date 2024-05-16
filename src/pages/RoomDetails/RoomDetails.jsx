@@ -12,14 +12,15 @@ import { addDays } from "date-fns";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import Loader from "../../components/Loaders/Loader";
 import { useQuery } from "@tanstack/react-query";
-import { singleRoomDetails } from "../../utils/api";
-import { useParams } from "react-router-dom";
+import { bookARoom, singleRoomDetails } from "../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
 import RoomReviews from "./RoomReviews";
 import { Bounce, toast } from "react-toastify";
+import { fixDate } from "../../utils/GetDate";
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { loading, user } = useContext(AuthContext);
-
+  const navigation = useNavigate();
   const [dateState, setDateState] = useState([
     {
       startDate: new Date(),
@@ -35,7 +36,10 @@ const RoomDetails = () => {
     queryFn: () => singleRoomDetails(id),
   });
 
-  const handleBook = (date) => {
+  const handleBook = async (date) => {
+    const startDate = fixDate(date[0]?.startDate);
+    const endDate = fixDate(date[0]?.endDate);
+
     if (!user) {
       toast.warn("Login To Book a Room", {
         position: "top-right",
@@ -63,7 +67,41 @@ const RoomDetails = () => {
       });
       return;
     }
-    console.log(date, "clicked");
+    const roomID = data?._id;
+    const bookData = {
+      date_info: {
+        start_date: startDate,
+        end_date: endDate,
+      },
+      room_information: {
+        room_id: roomID,
+        room_image: data?.image,
+        room_name: data?.room_name,
+        room_status: data?.status,
+      },
+      user_info: {
+        name: user?.displayName,
+        email: user?.email,
+        photo: user?.photoURL,
+      },
+    };
+
+    console.log(bookData, "clicked");
+    const result = await bookARoom({ roomID, bookData });
+    if (result) {
+      toast.success("Room Booked", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+    return result;
   };
 
   if (loading) {
@@ -87,7 +125,7 @@ const RoomDetails = () => {
             {/* Main Swiper */}
             <div className="border-[10px] border-white bg-white rounded-[8px] w-full my-shadow">
               <Swiper
-                loop={true}
+                // loop={true}
                 spaceBetween={10}
                 navigation={true}
                 thumbs={{
@@ -109,7 +147,7 @@ const RoomDetails = () => {
               </Swiper>
               <Swiper
                 onSwiper={setThumbsSwiper}
-                loop={true}
+                // loop={true}
                 spaceBetween={10}
                 slidesPerView={4}
                 freeMode={true}
@@ -303,7 +341,7 @@ const RoomDetails = () => {
             <div className="flex flex-col items-center justify-center w-full my-4">
               <a
                 href={"#roomReviews"}
-                className="w-full px-6 py-4 text-lg font-semibold text-center text-indigo-600 transition-all duration-500 bg-white rounded-full shadow-sm whitespace-nowrap shadow-transparent hover:bg-indigo-100 hover:shadow-indigo-200"
+                className="w-full px-6 py-4 text-lg font-semibold text-center text-indigo-600 transition-all duration-500 bg-indigo-100 rounded-full shadow-sm whitespace-nowrap shadow-transparent hover:shadow-indigo-200"
               >
                 See All Reviews
               </a>

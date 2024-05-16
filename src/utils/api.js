@@ -46,6 +46,18 @@ export const singleRoomDetails = async (id) => {
   return result;
 };
 
+export const bookARoom = async ({ roomID, bookData }) => {
+  const res = await axios.post(
+    `${import.meta.env.VITE_SITE_URL}/roomBooking/${roomID}`,
+    bookData,
+    {
+      withCredentials: true,
+    }
+  );
+  const result = res?.data;
+  return result;
+};
+
 //generate token
 export const generateToken = async (user) => {
   const res = await axios.post(`${import.meta.env.VITE_SITE_URL}/jwt`, user, {
