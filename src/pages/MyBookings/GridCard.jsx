@@ -7,6 +7,7 @@ import { Bounce, toast } from "react-toastify";
 import { fixDate } from "../../utils/GetDate";
 import { addDays } from "date-fns";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
+import Swal from "sweetalert2";
 
 const GridCard = ({ data }) => {
   const { _id, room_name, image, booked_info, reviews } = data;
@@ -45,9 +46,9 @@ const GridCard = ({ data }) => {
       },
     };
 
-    console.log(bookData, "clicked");
+    // console.log(bookData, "clicked");
     const result = await updateARoom({ roomID, bookData });
-    console.log(result);
+    // console.log(result);
     if (result) {
       toast.success("Date Updated", {
         position: "top-right",
@@ -65,21 +66,21 @@ const GridCard = ({ data }) => {
   };
 
   const deleteRoom = async () => {
-    const result = await deleteARoom(_id);
-    if (result) {
-      toast.warn("Booking Canceled", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-    }
-    return result;
+    //swal
+    Swal.fire({
+      title: "Are you sure you want cancel booking?",
+      showCancelButton: true,
+      confirmButtonText: "Cancel Booking",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteARoom(_id);
+        if (res) {
+          Swal.fire("Booking Canceled", "", "success");
+        }
+        return res;
+      }
+    });
+    //swal
   };
 
   return (

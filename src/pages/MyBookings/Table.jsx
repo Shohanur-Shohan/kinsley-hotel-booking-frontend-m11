@@ -2,6 +2,9 @@ import TableData from "./TableData";
 import PropTypes from "prop-types";
 
 const Table = ({ data }) => {
+  if (data?.length === 0) {
+    return <p>You haven{"'"}t booked a room yet!</p>;
+  }
   return (
     <div className="overflow-hidden border border-gray-200 md:rounded-lg">
       <table className="min-w-full divide-y divide-gray-200 ">

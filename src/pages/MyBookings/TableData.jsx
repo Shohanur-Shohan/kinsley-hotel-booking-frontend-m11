@@ -7,6 +7,7 @@ import { Bounce, toast } from "react-toastify";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import { fixDate } from "../../utils/GetDate";
 import { deleteARoom, updateARoom } from "../../utils/api";
+import Swal from "sweetalert2";
 
 const TableData = ({ table }) => {
   const { _id, room_name, image, booked_info } = table;
@@ -46,7 +47,6 @@ const TableData = ({ table }) => {
       },
     };
 
-    console.log(bookData, "clicked");
     const result = await updateARoom({ roomID, bookData });
     console.log(result);
     if (result) {
@@ -66,21 +66,21 @@ const TableData = ({ table }) => {
   };
 
   const deleteRoom = async () => {
-    const result = await deleteARoom(_id);
-    if (result) {
-      toast.warn("Booking Canceled", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-    }
-    return result;
+    //swal
+    Swal.fire({
+      title: "Are you sure you want cancel booking?",
+      showCancelButton: true,
+      confirmButtonText: "Cancel Booking",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteARoom(_id);
+        if (res) {
+          Swal.fire("Booking Canceled", "", "success");
+        }
+        return res;
+      }
+    });
+    //swal
   };
   return (
     <tr>
