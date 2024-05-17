@@ -6,7 +6,7 @@ import { Bounce, toast } from "react-toastify";
 import { fixDate } from "../../utils/GetDate";
 import { postReview } from "../../utils/api";
 
-const ReviewForm = ({ roomdata }) => {
+const ReviewForm = ({ roomdata, refetch }) => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
   const roomId = roomdata?._id;
@@ -58,6 +58,7 @@ const ReviewForm = ({ roomdata }) => {
           theme: "light",
           transition: Bounce,
         });
+        refetch();
       }
     } else {
       toast.warn("Something went Wrong!", {
@@ -202,5 +203,6 @@ const ReviewForm = ({ roomdata }) => {
 };
 ReviewForm.propTypes = {
   roomdata: PropTypes.object,
+  refetch: PropTypes.func,
 };
 export default ReviewForm;

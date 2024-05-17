@@ -33,7 +33,7 @@ const RoomDetails = () => {
   const { id } = useParams();
   // const email = user?.email;
 
-  const { data, isLoading, isPending } = useQuery({
+  const { data, isLoading, isPending, refetch } = useQuery({
     queryKey: ["singleRoomDetails"],
     queryFn: () => singleRoomDetails(id),
   });
@@ -100,6 +100,7 @@ const RoomDetails = () => {
         const res = await bookARoom({ roomID, bookData });
         if (res) {
           Swal.fire("Room Booked Successfully!", "", "success");
+          refetch();
         }
         return res;
       }
@@ -182,7 +183,7 @@ const RoomDetails = () => {
               <h1 className="mb-[30px] text-[#383a4e] text-[24px] font-semibold">
                 Write a review
               </h1>
-              <ReviewForm roomdata={data} />
+              <ReviewForm roomdata={data} refetch={refetch} />
             </div>
 
             {/* End Form */}

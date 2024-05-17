@@ -16,7 +16,7 @@ const MyBookings = () => {
 
   const userEmail = user?.email;
 
-  const { data, isLoading, isPending } = useQuery({
+  const { data, isLoading, isPending, refetch } = useQuery({
     queryKey: ["myBookedRooms", userEmail],
     queryFn: () => myBookedRoom(userEmail),
   });
@@ -67,7 +67,7 @@ const MyBookings = () => {
             <div className="flex flex-col mt-6">
               <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                  <Table data={data} />
+                  <Table data={data} refetch={refetch} />
                 </div>
               </div>
             </div>
@@ -76,7 +76,7 @@ const MyBookings = () => {
         {isLoading || isPending ? (
           <Loader />
         ) : (
-          tableGrid && <GridData data={data} />
+          tableGrid && <GridData data={data} refetch={refetch} />
         )}
 
         {/* table */}

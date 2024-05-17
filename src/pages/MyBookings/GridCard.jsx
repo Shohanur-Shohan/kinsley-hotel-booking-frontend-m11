@@ -9,7 +9,7 @@ import { addDays } from "date-fns";
 import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import Swal from "sweetalert2";
 
-const GridCard = ({ data }) => {
+const GridCard = ({ data, refetch }) => {
   const { _id, room_name, image, booked_info, reviews } = data;
   const { user } = useContext(AuthContext);
   const [dateState, setDateState] = useState([
@@ -61,6 +61,7 @@ const GridCard = ({ data }) => {
         theme: "light",
         transition: Bounce,
       });
+      refetch();
     }
     return result;
   };
@@ -76,6 +77,7 @@ const GridCard = ({ data }) => {
         const res = await deleteARoom(_id);
         if (res) {
           Swal.fire("Booking Canceled", "", "success");
+          refetch();
         }
         return res;
       }
@@ -236,5 +238,6 @@ const GridCard = ({ data }) => {
 };
 GridCard.propTypes = {
   data: PropTypes.object,
+  refetch: PropTypes.func,
 };
 export default GridCard;

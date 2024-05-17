@@ -1,7 +1,7 @@
 import TableData from "./TableData";
 import PropTypes from "prop-types";
 
-const Table = ({ data }) => {
+const Table = ({ data, refetch }) => {
   if (data?.length === 0) {
     return <p>You haven{"'"}t booked a room yet!</p>;
   }
@@ -42,7 +42,9 @@ const Table = ({ data }) => {
         </thead>
         <tbody className="bg-white divide-y divide-gray-200 ">
           {data?.map((table) => {
-            return <TableData key={table?._id} table={table} />;
+            return (
+              <TableData key={table?._id} table={table} refetch={refetch} />
+            );
           })}
         </tbody>
       </table>
@@ -51,5 +53,6 @@ const Table = ({ data }) => {
 };
 Table.propTypes = {
   data: PropTypes.array,
+  refetch: PropTypes.func,
 };
 export default Table;

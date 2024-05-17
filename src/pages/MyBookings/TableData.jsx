@@ -9,7 +9,7 @@ import { fixDate } from "../../utils/GetDate";
 import { deleteARoom, updateARoom } from "../../utils/api";
 import Swal from "sweetalert2";
 
-const TableData = ({ table }) => {
+const TableData = ({ table, refetch }) => {
   const { _id, room_name, image, booked_info } = table;
   const { user } = useContext(AuthContext);
   const [dateState, setDateState] = useState([
@@ -61,6 +61,7 @@ const TableData = ({ table }) => {
         theme: "light",
         transition: Bounce,
       });
+      refetch();
     }
     return result;
   };
@@ -76,6 +77,7 @@ const TableData = ({ table }) => {
         const res = await deleteARoom(_id);
         if (res) {
           Swal.fire("Booking Canceled", "", "success");
+          refetch();
         }
         return res;
       }
@@ -204,5 +206,6 @@ const TableData = ({ table }) => {
 };
 TableData.propTypes = {
   table: PropTypes.object,
+  refetch: PropTypes.func,
 };
 export default TableData;
