@@ -18,6 +18,7 @@ import RoomReviews from "./RoomReviews";
 import { Bounce, toast } from "react-toastify";
 import { fixDate } from "../../utils/GetDate";
 import ReviewForm from "./ReviewForm";
+import Swal from "sweetalert2";
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { loading, user } = useContext(AuthContext);
@@ -89,22 +90,21 @@ const RoomDetails = () => {
       },
     };
 
-    console.log(bookData, "clicked");
-    const result = await bookARoom({ roomID, bookData });
-    if (result) {
-      toast.success("Room Booked", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-    }
-    return result;
+    //swal
+    Swal.fire({
+      title: "Are you sure you want to book this room?",
+      showCancelButton: true,
+      confirmButtonText: "Book Now",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await bookARoom({ roomID, bookData });
+        if (res) {
+          Swal.fire("Room Booked Successfully!", "", "success");
+        }
+        return res;
+      }
+    });
+    //swal
   };
 
   if (loading) {
