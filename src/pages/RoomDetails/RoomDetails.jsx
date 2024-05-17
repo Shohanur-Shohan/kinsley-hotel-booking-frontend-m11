@@ -13,14 +13,14 @@ import { AuthContext } from "../../providers/FirebaseAuthProvider";
 import Loader from "../../components/Loaders/Loader";
 import { useQuery } from "@tanstack/react-query";
 import { bookARoom, singleRoomDetails } from "../../utils/api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RoomReviews from "./RoomReviews";
 import { Bounce, toast } from "react-toastify";
 import { fixDate } from "../../utils/GetDate";
+import ReviewForm from "./ReviewForm";
 const RoomDetails = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { loading, user } = useContext(AuthContext);
-  const navigation = useNavigate();
   const [dateState, setDateState] = useState([
     {
       startDate: new Date(),
@@ -28,13 +28,15 @@ const RoomDetails = () => {
       key: "selection",
     },
   ]);
+
   const { id } = useParams();
-  const email = user?.email;
+  // const email = user?.email;
 
   const { data, isLoading, isPending } = useQuery({
     queryKey: ["singleRoomDetails"],
     queryFn: () => singleRoomDetails(id),
   });
+  // console.log(data);
 
   const handleBook = async (date) => {
     const startDate = fixDate(date[0]?.startDate);
@@ -180,124 +182,7 @@ const RoomDetails = () => {
               <h1 className="mb-[30px] text-[#383a4e] text-[24px] font-semibold">
                 Write a review
               </h1>
-              <form>
-                <div className="grid gap-y-4">
-                  {/* price and rating */}
-                  <div className="mb-3">
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      <div className="col-span-1">
-                        <label
-                          htmlFor="userName"
-                          className="block mb-2 font-medium text-gray-900 text-md"
-                        >
-                          Username
-                        </label>
-                        {user ? (
-                          <input
-                            type="text"
-                            name="userName"
-                            id="userName"
-                            defaultValue={email.substring(
-                              0,
-                              email.indexOf("@")
-                            )}
-                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Enter your username.."
-                            disabled
-                            required
-                          />
-                        ) : (
-                          <input
-                            type="text"
-                            name="userName"
-                            id="userName"
-                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Enter your username.."
-                            disabled
-                            required
-                          />
-                        )}
-                      </div>
-
-                      <div className="col-span-1">
-                        <label
-                          htmlFor="email"
-                          className="block mb-2 font-medium text-gray-900 text-md"
-                        >
-                          Email
-                        </label>
-                        {user ? (
-                          <input
-                            type="text"
-                            name="email"
-                            id="email"
-                            defaultValue={email}
-                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Enter your email.."
-                            disabled
-                            required
-                          />
-                        ) : (
-                          <input
-                            type="text"
-                            name="email"
-                            id="email"
-                            className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Enter your email.."
-                            disabled
-                            required
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  {/* price and rating */}
-                  <div className="mb-3">
-                    <div className="grid grid-cols-1">
-                      <div className="col-span-1">
-                        <label
-                          htmlFor="rating"
-                          className="block mb-2 font-medium text-gray-900 text-md"
-                        >
-                          Room Rating
-                        </label>
-
-                        <select
-                          name="rating"
-                          id="rating"
-                          className="bg-white border-none my-shadow text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        >
-                          <option>1 Star</option>
-                          <option>2 Stars</option>
-                          <option>3 Stars</option>
-                          <option>4 Stars</option>
-                          <option defaultChecked>5 Stars</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  {/* End Form Group */}
-                  <div className="mb-3">
-                    <div className="grid grid-cols-1 gap-3">
-                      <div className="col-span-1">
-                        <textarea
-                          name="message"
-                          id="message"
-                          className=" h-[150px] bg-[#fff] border border-none text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                          placeholder="Enter youe review.."
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="inline-flex w-fit items-center tracking-[1px] justify-center px-[40px] py-3 text-sm font-semibold text-white transition-colors bg-[#3B61DD] hover:bg-[#4470FE] rounded-full gap-x-2"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
+              <ReviewForm roomdata={data} />
             </div>
 
             {/* End Form */}
@@ -368,7 +253,12 @@ const RoomDetails = () => {
           </div>
         </div>
       </div>
-      <RoomReviews />
+
+      {isLoading || isPending ? (
+        <p>No review available</p>
+      ) : (
+        <RoomReviews roomReviews={data?.reviews} />
+      )}
     </main>
   );
 };

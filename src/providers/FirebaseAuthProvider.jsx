@@ -64,7 +64,6 @@ const FirebaseAuthProvider = ({ children }) => {
   //onAuthStateChanged
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      //   setLoading(true);
       setUser(currentUser);
       setLoading(false);
       const userEmail = currentUser?.email || user?.email;
@@ -74,14 +73,14 @@ const FirebaseAuthProvider = ({ children }) => {
       if (user) {
         (async () => {
           const result = await generateToken(loggedUser);
-          console.log("logged in", result);
+          // console.log("logged in", result);
           return result;
         })();
       } else {
         //remove token
         (async () => {
           const result = await removeToken(loggedUser);
-          console.log("logged out", result);
+          // console.log("logged out", result);
           return result;
         })();
       }

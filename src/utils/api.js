@@ -116,3 +116,16 @@ export const removeToken = async (user) => {
   const result = res?.data;
   return result;
 };
+
+//post review
+export const postReview = async ({ roomId, userReview }) => {
+  const res = await axios.post(
+    `${import.meta.env.VITE_SITE_URL}/giveReview/${roomId}`,
+    userReview,
+    {
+      withCredentials: true,
+    }
+  );
+  const result = res?.data;
+  return result;
+};

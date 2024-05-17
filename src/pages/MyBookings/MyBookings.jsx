@@ -19,7 +19,7 @@ const MyBookings = () => {
     queryFn: () => myBookedRoom(user?.email),
   });
 
-  console.log(data);
+  // console.log(data);
 
   if (loading) {
     return <Loader />;
