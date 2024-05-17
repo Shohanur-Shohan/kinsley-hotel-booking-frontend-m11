@@ -84,6 +84,7 @@ const FirebaseAuthProvider = ({ children }) => {
           return result;
         })();
       }
+      // console.log(currentUser);
     });
 
     return () => {

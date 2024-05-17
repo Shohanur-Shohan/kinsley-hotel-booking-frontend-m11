@@ -1,22 +1,21 @@
-import axios from "axios";
-
+import { axiosSecure } from "../hooks/useAxiosSecure";
 //featured
 export const featuredRooms = async () => {
-  const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/featured`);
+  const res = await axiosSecure.get(`/featured`);
   const result = res?.data;
   return result;
 };
 //all rooms
 export const allRooms = async (path) => {
-  let apiUrl = `${import.meta.env.VITE_SITE_URL}/all-rooms`;
+  let apiUrl = `/all-rooms`;
 
   if (path === "ascending") {
-    apiUrl = `${import.meta.env.VITE_SITE_URL}/all-rooms/asc`;
+    apiUrl = `/all-rooms/asc`;
   } else if (path === "descending") {
-    apiUrl = `${import.meta.env.VITE_SITE_URL}/all-rooms/des`;
+    apiUrl = `/all-rooms/des`;
   }
 
-  const res = await axios.get(`${apiUrl}`);
+  const res = await axiosSecure.get(`${apiUrl}`);
   const result = res?.data;
   // console.log(result);
   return result;
@@ -24,56 +23,42 @@ export const allRooms = async (path) => {
 
 //all rooms ascending order
 export const allRoomsAsc = async () => {
-  const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/all-rooms/asc`);
+  const res = await axiosSecure.get(`/all-rooms/asc`);
   const result = res?.data;
   return result;
 };
 
 //all rooms descending order
 export const allRoomsDes = async () => {
-  const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/all-rooms/des`);
+  const res = await axiosSecure.get(`/all-rooms/des`);
   const result = res?.data;
   return result;
 };
 
 //single room
 export const singleRoomDetails = async (id) => {
-  const res = await axios.get(
-    `${import.meta.env.VITE_SITE_URL}/room-details/${id}`,
-    { withCredentials: true }
-  );
+  const res = await axiosSecure.get(`/room-details/${id}`);
   const result = res?.data;
   return result;
 };
 //book a room
 export const bookARoom = async ({ roomID, bookData }) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_SITE_URL}/roomBooking/${roomID}`,
-    bookData,
-    {
-      withCredentials: true,
-    }
-  );
+  const res = await axiosSecure.post(`/roomBooking/${roomID}`, bookData);
   const result = res?.data;
   return result;
 };
 
 // list of your rooms
 export const myBookedRoom = async (email) => {
-  const res = await axios.get(
-    `${import.meta.env.VITE_SITE_URL}/myRoomBooked/${email}`,
-    {
-      withCredentials: true,
-    }
-  );
+  const res = await axiosSecure.get(`/myRoomBooked/${email}`);
   const result = res?.data;
   return result;
 };
 
 //update your room
 export const updateARoom = async ({ roomID, bookData }) => {
-  const res = await axios.patch(
-    `${import.meta.env.VITE_SITE_URL}/updateRoomBooking/${roomID}`,
+  const res = await axiosSecure.patch(
+    `/updateRoomBooking/${roomID}`,
     bookData,
     {
       withCredentials: true,
@@ -85,47 +70,28 @@ export const updateARoom = async ({ roomID, bookData }) => {
 
 //delete your room
 export const deleteARoom = async (roomID) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_SITE_URL}/deleteRoomBooking/${roomID}`,
-    {
-      withCredentials: true,
-    }
-  );
+  const res = await axiosSecure.post(`/deleteRoomBooking/${roomID}`);
   const result = res?.data;
   return result;
 };
 
 //generate token
 export const generateToken = async (user) => {
-  const res = await axios.post(`${import.meta.env.VITE_SITE_URL}/jwt`, user, {
-    withCredentials: true,
-  });
+  const res = await axiosSecure.post(`/jwt`, user);
   const result = res?.data;
   return result;
 };
 
 //generate token
 export const removeToken = async (user) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_SITE_URL}/logout`,
-    user,
-    {
-      withCredentials: true,
-    }
-  );
+  const res = await axiosSecure.post(`/logout`, user);
   const result = res?.data;
   return result;
 };
 
 //post review
 export const postReview = async ({ roomId, userReview }) => {
-  const res = await axios.post(
-    `${import.meta.env.VITE_SITE_URL}/giveReview/${roomId}`,
-    userReview,
-    {
-      withCredentials: true,
-    }
-  );
+  const res = await axiosSecure.post(`/giveReview/${roomId}`, userReview);
   const result = res?.data;
   return result;
 };

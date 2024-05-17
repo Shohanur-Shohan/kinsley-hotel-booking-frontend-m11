@@ -43,9 +43,9 @@ const SignIn = () => {
         navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
-        const errorMessage = error;
+        // const errorMessage = error;
         const errorCode = error.code;
-        console.log(errorMessage, errorCode, "from signin");
+        // console.log(errorMessage, errorCode, "from signin");
         toast.error(
           `${
             errorCode ===
@@ -74,24 +74,26 @@ const SignIn = () => {
   const handleGoogle = () => {
     handleGoogleLogin()
       .then((result) => {
-        console.log(result?.user);
-        toast.success("Login Success", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        navigate(location?.state ? location?.state : "/");
+        // console.log(result?.user);
+        if (result) {
+          toast.success("Login Success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          navigate(location?.state ? location?.state : "/");
+        }
       })
       .catch((error) => {
-        const errorMessage = error;
+        // const errorMessage = error;
         const errorCode = error.code;
-        console.log(errorMessage, errorCode, "from signin");
+        // console.log(errorMessage, errorCode, "from signin");
         toast.error(
           `${
             errorCode ===

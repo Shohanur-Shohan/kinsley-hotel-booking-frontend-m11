@@ -10,7 +10,10 @@ const ReviewForm = ({ roomdata }) => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
   const roomId = roomdata?._id;
-  const username = email.substring(0, email.indexOf("@"));
+  const username =
+    email && email.includes("@")
+      ? email.substring(0, email.indexOf("@"))
+      : user?.displayName;
   const {
     register,
     handleSubmit,

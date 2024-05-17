@@ -14,9 +14,11 @@ const MyBookings = () => {
   const [tableGrid, settableGrid] = useState(false);
   const { loading, user } = useContext(AuthContext);
 
+  const userEmail = user?.email;
+
   const { data, isLoading, isPending } = useQuery({
-    queryKey: ["myBookedRooms", user?.email],
-    queryFn: () => myBookedRoom(user?.email),
+    queryKey: ["myBookedRooms", userEmail],
+    queryFn: () => myBookedRoom(userEmail),
   });
 
   // console.log(data);
@@ -24,7 +26,7 @@ const MyBookings = () => {
   if (loading) {
     return <Loader />;
   }
-  // if ((isLoading, isPending))
+
   return (
     <main>
       <Helmet>

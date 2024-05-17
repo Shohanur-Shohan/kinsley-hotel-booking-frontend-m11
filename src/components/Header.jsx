@@ -22,6 +22,7 @@ const Header = () => {
       transition: Bounce,
     });
   };
+  // console.log(user?.photoURL);
   return (
     <header
       data-aos="fade-down"
@@ -134,7 +135,7 @@ const Header = () => {
                     <img
                       alt="avatar"
                       className="object cover "
-                      src={`${user?.photoURL || "/assets/noProfile.svg"} `}
+                      src={`${user?.photoURL || "/assets/noProfile.svg"}`}
                     />
                   </div>
                 </div>
