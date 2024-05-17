@@ -1,5 +1,5 @@
 <div align="center">
-  <h3 align="center">Kinsley Hotel Website</h3>
+  <h3 align="center">Kinsley Hotel Room Booking Website</h3>
 </div>
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
@@ -7,7 +7,7 @@
 - Vite
 - React.js
 - Tailwind CSS
-- React Query
+- Tanstack Query
 - Firebase
 - Express
 - Node
@@ -27,20 +27,21 @@
 
 ## <a name="features">🔋 Features</a>
 
-👉 **Beautiful Pages**: Includes Home, All Art & craft Items, Add Craft Item, Contact, My Art & Craft List, Login, Register
+👉 **Beautiful Pages**: Includes Home, About, Gallery, Rooms, My booked Rooms, Login, Register, Contact
 
 👉 **Animations**: Engaging effects triggered by mouse movement and scrolling by Animation on scroll.
 
 👉 **Responsive**: Ensures seamless functionality and full responsive across all devices.
 
-👉 **Authentication**: Users can register, login with email/password, google & github account.
+👉 **Authentication**: Users can register, login with email/password & google.
 
-👉 **All Art & craft Items**: Users can view all art & craft items.
+👉 **Rooms Page**: Users can view all the Rooms. Filter them by price. Every Room has dedicated Details page.
 
-👉 **Add Craft Items**: After successfull login user can add their art & craft item & from my list they can view their added item.
+👉 **Single Room**: From Single room page users can get detailed information about that room. Users can swipe through room image like a slider. Customer can see others customers review about that room. Also customer can book a room by clicking book now button.
 
-👉 **Add Craft Items**: User can update their craft items.
-and many more,
+👉 **Room Review** After booking a room a user can then give a feedback about that room from room details page.
+
+👉 **My Booking**: In my booking page user can see all their booked room. A user can preview, update date or cancel his/her room.
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
