@@ -33,7 +33,7 @@ const SignUp = () => {
     createUser(email, password)
       .then((userCredential) => {
         // Signed up
-        console.log(userCredential, "from signUp");
+        // console.log(userCredential, "from signUp");
 
         updateCurrentUser(displayName, photoURL);
         if (userCredential?.user) {
@@ -55,9 +55,9 @@ const SignUp = () => {
         navigate("/login");
       })
       .catch((error) => {
-        const errorMessage = error;
+        // const errorMessage = error;
         const errorCode = error.code;
-        console.log(errorMessage, errorCode, "from signUp");
+        // console.log(errorMessage, errorCode, "from signUp");
         toast.error(
           `${
             errorCode ===
@@ -86,24 +86,26 @@ const SignUp = () => {
   const handleGoogle = () => {
     handleGoogleLogin()
       .then((result) => {
-        console.log(result?.user);
-        toast.success("Registration Success", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-        navigate("/");
+        // console.log(result?.user);
+        if (result) {
+          toast.success("Registration Success", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          navigate(location?.state ? location?.state : "/");
+        }
       })
       .catch((error) => {
-        const errorMessage = error;
+        // const errorMessage = error;
         const errorCode = error.code;
-        console.log(errorMessage, errorCode, "from signUp");
+        // console.log(errorMessage, errorCode, "from signUp");
         toast.error(
           `${
             errorCode ===
